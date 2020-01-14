@@ -18,6 +18,25 @@ function divide(a, b) {
     }
 }
 
+function operate(a, b, operator) {
+    switch (operator) {
+        case add:
+            return add(a, b);
+            break;
+        case subtract:
+            return subtract(a, b);
+            break;
+        case multiply:
+            return multiply(a, b);
+            break;
+        case divide:
+            return divide(a, b);
+            break;
+        default:
+            break;
+    }
+}
+
 // Not sure if this will be needed for this project
 // function sum(array) {
 // 	return array.reduce((total, current) => total + current, 0);
