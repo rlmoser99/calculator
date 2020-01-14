@@ -1,3 +1,37 @@
 body {
     background-color: #d3d3d3;
 }
+
+.container {
+    display: grid;
+    background-color: white;
+    border: 1px solid black;
+    margin: 15px auto;
+    width: 400px;
+    height: 400px;
+    grid-template-columns: repeat(4, 1fr);
+    grid-template-rows: repeat(6, 1fr);
+}
+
+.container > * {
+    text-align: center;
+    align-self: center;
+    
+}
+
+.display {
+    grid-column: 1 / -1;
+    grid-row: 1 / 2;
+    text-align: right;
+    /* line-height: 40px; */
+    background: cornflowerblue;
+    justify-self: stretch;
+    height: 100%;
+    /* padding: 10px; */
+}
+
+.display h1 {
+    line-height: 66px;
+    padding: 0 10px;
+    font-size: 2rem;
+}
