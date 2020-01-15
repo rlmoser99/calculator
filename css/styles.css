@@ -14,7 +14,7 @@ body {
     width: 400px;
     height: 400px;
     grid-template-columns: repeat(4, 1fr);
-    grid-template-rows: repeat(6, 1fr);
+    grid-template-rows: 30px repeat(6, 1fr);
 }
 
 .container > * {
@@ -29,17 +29,27 @@ body {
     font-weight: 600;
 }
 
+.display, .raw-display {
+    background: #00b1c5;
+    padding: 0 10px;
+    font-family: monospace;
+    justify-self: stretch;
+    justify-content: right;
+}
+
 .display {
+    grid-column: 1 / -1;
+    grid-row: 2 / 3; 
+    color: #273043;
+    font-size: 3rem;
+}
+
+.raw-display {
     grid-column: 1 / -1;
     grid-row: 1 / 2;
     background: #00b1c5;;
-    font-size: 2rem;
-    padding: 0 10px;
-    justify-self: stretch;
-    justify-content: right;
-    color: #273043;
-    font-family: monospace;
-    font-size: 3rem;
+    color: white;
+    font-size: 1.2rem;
 }
 
 .operator {

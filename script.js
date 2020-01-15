@@ -1,28 +1,21 @@
-const numberButtons = document.querySelectorAll('.number');
+const calcButtons = document.querySelectorAll('button');
 const display = document.querySelector('.display');
-const operatorButtons = document.querySelectorAll('.operator');
-// const equalButton = document.querySelector('.equal');
+const rawDisplay = document.querySelector('.raw-display');
 let displayNumber = '';
-let currentOperator = ''; 
-var variables = [];
-let result = '';
+let rawData = '';
+// const equalButton = document.querySelector('.equal');
+// let result = '';
 
 function add(a, b) {
-    // console.log('add ran');
     result = a + b;
-    console.log(result);
-    display.textContent = result;
 }
 
 function subtract(a, b) {
     result = a - b;
-    // console.log(result);
-    display.textContent = result;
 }
 
 function multiply(a, b) {
     result = a * b;
-    display.textContent = result;
 }
 
 function divide(a, b) {
@@ -32,80 +25,54 @@ function divide(a, b) {
     } else {
         result = a / b;
     }
-    display.textContent = result;
 }
 
-function operate([a, operator, b]) {
-    a = +a;
-    b = +b;
-    // console.log([a, operator, b]);
-    // console.log('operate ran');
-    // console.log(operator);
-    switch (operator) {
-        case 'plus':
-            // console.log('plus in operate ran');
-            return add(a, b);
-        case 'minus':
-            return subtract(a, b);
-        case 'times':
-            return multiply(a, b);
-        case 'divide':
-            return divide(a, b);
-        default:
-            break;
-    }
-}
-
-function collectNumbers() {    
+function collectData() {    
     // console.log(this.id);   
     switch(this.id) {
         case 'zero':
             displayNumber = displayNumber + '0';
+            rawData = rawData + '0';
             break;
         case 'nine':
             displayNumber = displayNumber + '9';
+            rawData = rawData + '9';
             break;
         case 'eight':
             displayNumber = displayNumber + '8';
+            rawData = rawData + '8';
             break;
         case 'seven':
             displayNumber = displayNumber + '7';
+            rawData = rawData + '7';
             break;
         case 'six':
             displayNumber = displayNumber + '6';
+            rawData = rawData + '6';
             break;
         case 'five':
             displayNumber = displayNumber + '5';
+            rawData = rawData + '5';
             break;
         case 'four':
             displayNumber = displayNumber + '4';
+            rawData = rawData + '4';
             break;
         case 'three':
             displayNumber = displayNumber + '3';
+            rawData = rawData + '3';
             break;
         case 'two':
             displayNumber = displayNumber + '2';
+            rawData = rawData + '2';
             break;
         case 'one':
             displayNumber = displayNumber + '1';
+            rawData = rawData + '1';
             break;
         case 'period':
             console.log('period is not working yet');
             break;
-        default:
-            console.log('default for collectNumbers');
-            break;
-        }
-    display.textContent = displayNumber;
-    // console.log(displayNumber);        
-}
-
-function collectOperator() {
-    // console.log(displayNumber);
-    // console.log(this.id);
-    storeVariables(displayNumber);
-    displayNumber = '';
-    switch(this.id) {
         case 'clear':
             console.log('clear');
             break;
@@ -122,39 +89,35 @@ function collectOperator() {
             console.log('backspace');
             break;
         case 'plus':
-            // currentOperator = 'plus';
-            storeVariables('plus');
+            rawData = rawData + ' + ';
+            displayNumber = '';
             break;
         case 'minus':
-            // currentOperator = 'minus';
-            storeVariables('minus');
+            rawData = rawData + ' - ';
+            displayNumber = '';
             break;
         case 'times':
-            // currentOperator = 'times';
-            storeVariables('times');
+            rawData = rawData + ' * ';
+            displayNumber = '';
             break;
         case 'divide':
-            // currentOperator = 'divide';
-            storeVariables('divide');
+            rawData = rawData + ' / ';
+            displayNumber = '';
             break;
         case 'equals':
-            return operate(variables);
+            console.log('equal button was clicked')
             break;
         default:
-            console.log('default for collectOperators');
+            console.log('default for collectNumbers');
             break;
-    }
-    // console.log(currentOperator);
-    // storeVariables(currentOperator);
+        }
+    display.textContent = displayNumber;
+    rawDisplay.textContent = rawData;
+    console.log(rawData);        
 }
 
-function storeVariables(a) {
-    variables.push(a);
-    console.log(variables);
-}
+calcButtons.forEach(calcButton => calcButton.addEventListener('click', collectData))
 
-numberButtons.forEach(numberButton => numberButton.addEventListener('click', collectNumbers))
-operatorButtons.forEach(operatorButton => operatorButton.addEventListener('click', collectOperator))
 // equalButton.addEventListener('click', operate(variables));
 
 // Not sure if this will be needed for this project
@@ -178,7 +141,8 @@ operatorButtons.forEach(operatorButton => operatorButton.addEventListener('click
 
 // rawData with 2 multiplication signs
 // let rawData = '10+3*12-6*4'
-let rawData = '10+3*12/6-4'
+
+// let rawData = '10+3*12/6-4'
 // rawData should equal 12
 
 // let timesData = new RegEx('/d+)\*(/d+)/', 'g');
@@ -206,13 +170,38 @@ function calcData() {
     timesResult = multiplyData(timesString);
     // console.log(timesFinal);
     // Step 5: Replace raw data with the result of the multiplication
+    // NEED BETTER NAME!!!
     let noTimesData = timesRegExp[Symbol.replace](rawData, timesResult)
     console.log(noTimesData);
 }
 
-calcData();
+// calcData();
 
-// var re = /-/g; 
-// var str = '2016-01-01';
-// var newstr = re[Symbol.replace](str, '.');
-// console.log(newstr);  // 2016.01.01
+// Want to make sure it works with periods!!!
+
+let rawDataTest = '10+3*1.2/6-4'
+function calcDataTest() { 
+    // NEED TO DO LEFT TO RIGHT, so FIND MULT OR DIV THEN DECIDE
+    // Need to do one match symbol at a time
+    console.log(rawDataTest);
+    // Step 1: Define the Regex Pattern to Find - and keep for .replace 
+    let timesRegExp = /\d+\.?\d?\*\d+\.?\d?/;
+    // Step 2: Define what matches the regex
+    let timesMatch = rawDataTest.match(timesRegExp);
+    console.log(timesMatch);
+    // Step 3: Turn the matched pattern into a string and split it at the match symbol
+    let timesString = timesMatch.toString().split('*');
+    // console.log(timesString);
+    // Step 4: Multiply the two digits on each side of the symbol
+    timesResult = multiplyData(timesString);
+    // console.log(timesFinal);
+    // Step 5: Replace raw data with the result of the multiplication
+    // NEED BETTER NAME
+    let noTimesData = timesRegExp[Symbol.replace](rawDataTest, timesResult)
+    console.log(noTimesData);
+    // Will need to limit the length of the number
+}
+
+calcDataTest();
+
+
