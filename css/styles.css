@@ -1,3 +1,7 @@
+html {
+    box-sizing: border-box;
+}
+
 body {
     background-color: #d3d3d3;
 }
@@ -14,24 +18,30 @@ body {
 }
 
 .container > * {
-    text-align: center;
-    align-self: stretch;
+    align-items: center;
+    justify-content: center;
+    display: grid;
+    background-color:#273043;
+    color: #00b1c5;
 }
 
 .display {
     grid-column: 1 / -1;
     grid-row: 1 / 2;
-    text-align: right;
-    background: cornflowerblue;
-    height: 100%;
-}
-
-.display h1 {
-    line-height: 66px;
-    padding: 0 10px;
+    background: #00b1c5;;
     font-size: 2rem;
+    padding: 0 10px;
+    justify-self: stretch;
+    justify-content: right;
+    color: #273043;
 }
 
 .operator {
-    background: blue;
+    background: #242c3d;
+    color: white;
+}
+
+.equal {
+    background-color: #00b1c5;
+    color: white;
 }
