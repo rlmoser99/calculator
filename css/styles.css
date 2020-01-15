@@ -15,23 +15,23 @@ body {
 
 .container > * {
     text-align: center;
-    align-self: center;
-    
+    align-self: stretch;
 }
 
 .display {
     grid-column: 1 / -1;
     grid-row: 1 / 2;
     text-align: right;
-    /* line-height: 40px; */
     background: cornflowerblue;
-    justify-self: stretch;
     height: 100%;
-    /* padding: 10px; */
 }
 
 .display h1 {
     line-height: 66px;
     padding: 0 10px;
     font-size: 2rem;
+}
+
+.operator {
+    background: blue;
 }
