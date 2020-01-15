@@ -1,3 +1,5 @@
+// This file worked on 1/15/20 to do a basic 2 digit equation. I am going to re-work my logic and want to be able to easily test out my idea.
+
 const numberButtons = document.querySelectorAll('.number');
 const display = document.querySelector('.display');
 const operatorButtons = document.querySelectorAll('.operator');
@@ -170,49 +172,3 @@ operatorButtons.forEach(operatorButton => operatorButton.addEventListener('click
 //     return array.reduce((accumulator, nextItem) => accumulator * nextItem);
 // }
 
-// ORDER OF OPERATIONS:
-// Parentheses (simplify inside 'em)
-// Exponents
-// Multiplication and Division (from left to right)
-// Addition and Subtraction (from left to right)
-
-// rawData with 2 multiplication signs
-// let rawData = '10+3*12-6*4'
-let rawData = '10+3*12/6-4'
-// rawData should equal 12
-
-// let timesData = new RegEx('/d+)\*(/d+)/', 'g');
-// rawData.match(timesData);
-
-function multiplyData([a, b]) {
-    // console.log(a * b);
-    // display.textContent = result;
-    return a * b;
-}
-
-function calcData() { 
-    // NEED TO DO LEFT TO RIGHT, so FIND MULT OR DIV THEN DECIDE
-    // Need to do one match symbol at a time
-    console.log(rawData);
-    // Step 1: Define the Regex Pattern to Find - and keep for .replace 
-    let timesRegExp = /\d+\*\d+/;
-    // Step 2: Define what matches the regex
-    let timesMatch = rawData.match(timesRegExp);
-    // console.log(timesMatch);
-    // Step 3: Turn the matched pattern into a string and split it at the match symbol
-    let timesString = timesMatch.toString().split('*');
-    // console.log(timesString);
-    // Step 4: Multiply the two digits on each side of the symbol
-    timesResult = multiplyData(timesString);
-    // console.log(timesFinal);
-    // Step 5: Replace raw data with the result of the multiplication
-    let noTimesData = timesRegExp[Symbol.replace](rawData, timesResult)
-    console.log(noTimesData);
-}
-
-calcData();
-
-// var re = /-/g; 
-// var str = '2016-01-01';
-// var newstr = re[Symbol.replace](str, '.');
-// console.log(newstr);  // 2016.01.01
