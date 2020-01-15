@@ -4,8 +4,6 @@ html {
 
 body {
     background-color: #d3d3d3;
-    font-family: monospace;
-    font-size: 2rem;
 }
 
 .container {
@@ -25,6 +23,10 @@ body {
     display: grid;
     background-color:#273043;
     color: #00b1c5;
+    border: none;
+    font-family: monospace;
+    font-size: 2rem;
+    font-weight: 600;
 }
 
 .display {
@@ -36,14 +38,22 @@ body {
     justify-self: stretch;
     justify-content: right;
     color: #273043;
+    font-family: monospace;
+    font-size: 3rem;
 }
 
 .operator {
     background: #242c3d;
     color: white;
+    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+    font-size: 1.75rem;
 }
 
 .equal {
     background-color: #00b1c5;
-    color: white;
+    color:#273043;
+}
+
+button img {
+    margin: 0 auto;
 }
