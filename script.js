@@ -1,3 +1,7 @@
+const numberButtons = document.querySelectorAll('.number');
+const display = document.querySelector('.display');
+let displayNumber = '';   
+
 function add(a, b) {
 	return a + b;
 }
@@ -36,6 +40,53 @@ function operate(a, b, operator) {
             break;
     }
 }
+
+function collectNumbers() {    
+    // console.log(this.id);   
+    switch(this.id) {
+        case 'zero':
+            displayNumber = displayNumber + '0';
+            break;
+        case 'nine':
+            displayNumber = displayNumber + '9';
+            break;
+        case 'eight':
+            displayNumber = displayNumber + '8';
+            break;
+        case 'seven':
+            displayNumber = displayNumber + '7';
+            break;
+        case 'six':
+            displayNumber = displayNumber + '6';
+            break;
+        case 'five':
+            displayNumber = displayNumber + '5';
+            break;
+        case 'four':
+            displayNumber = displayNumber + '4';
+            break;
+        case 'three':
+            displayNumber = displayNumber + '3';
+            break;
+        case 'two':
+            displayNumber = displayNumber + '2';
+            break;
+        case 'one':
+            displayNumber = displayNumber + '1';
+            break;
+        case 'period':
+            console.log('period is not working yet');
+            break;
+        default:
+            console.log('default for collectNumbers');
+            break;
+        }
+    display.textContent = displayNumber;
+    console.log(displayNumber);        
+}
+
+numberButtons.forEach(numberButton => numberButton.addEventListener('click', collectNumbers))
+
 
 // Not sure if this will be needed for this project
 // function sum(array) {
