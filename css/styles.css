@@ -4,6 +4,8 @@ html {
 
 body {
     background-color: #d3d3d3;
+    font-family: monospace;
+    font-size: 2rem;
 }
 
 .container {
