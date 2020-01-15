@@ -1,41 +1,56 @@
 const numberButtons = document.querySelectorAll('.number');
 const display = document.querySelector('.display');
-let displayNumber = '';   
+const operatorButtons = document.querySelectorAll('.operator');
+// const equalButton = document.querySelector('.equal');
+let displayNumber = '';
+let currentOperator = ''; 
+var variables = [];
+let result = '';
 
 function add(a, b) {
-	return a + b;
+    // console.log('add ran');
+    result = a + b;
+    console.log(result);
+    display.textContent = result;
 }
 
 function subtract(a, b) {
-	return a - b;
+    result = a - b;
+    // console.log(result);
+    display.textContent = result;
 }
 
 function multiply(a, b) {
-	return a * b;
+    result = a * b;
+    display.textContent = result;
 }
 
 function divide(a, b) {
     if (b === 0) {
         alert("Can not divide by 0");
+        display.textContent = '';
     } else {
-        return a / b;
+        result = a / b;
     }
+    display.textContent = result;
 }
 
-function operate(a, b, operator) {
+function operate([a, operator, b]) {
+    a = +a;
+    b = +b;
+    // console.log([a, operator, b]);
+    // console.log('operate ran');
+    // console.log(operator);
     switch (operator) {
-        case add:
+        case 'plus':
+            // console.log('plus in operate ran');
             return add(a, b);
-            break;
-        case subtract:
+        case 'minus':
             return subtract(a, b);
-            break;
-        case multiply:
+        case 'times':
             return multiply(a, b);
-            break;
-        case divide:
+        case 'divide':
             return divide(a, b);
-            break;
         default:
             break;
     }
@@ -82,11 +97,65 @@ function collectNumbers() {
             break;
         }
     display.textContent = displayNumber;
-    console.log(displayNumber);        
+    // console.log(displayNumber);        
+}
+
+function collectOperator() {
+    // console.log(displayNumber);
+    // console.log(this.id);
+    storeVariables(displayNumber);
+    displayNumber = '';
+    switch(this.id) {
+        case 'clear':
+            console.log('clear');
+            break;
+        case 'pos-neg':
+            console.log('positive negative switch');
+            break;
+        case 'para':
+            console.log('parenthesis');
+            break;
+        case 'clear':
+            console.log('clear');
+            break;
+        case 'backspace':
+            console.log('backspace');
+            break;
+        case 'plus':
+            // currentOperator = 'plus';
+            storeVariables('plus');
+            break;
+        case 'minus':
+            // currentOperator = 'minus';
+            storeVariables('minus');
+            break;
+        case 'times':
+            // currentOperator = 'times';
+            storeVariables('times');
+            break;
+        case 'divide':
+            // currentOperator = 'divide';
+            storeVariables('divide');
+            break;
+        case 'equals':
+            return operate(variables);
+            break;
+        default:
+            console.log('default for collectOperators');
+            break;
+    }
+    // console.log(currentOperator);
+    // storeVariables(currentOperator);
+}
+
+function storeVariables(a) {
+    variables.push(a);
+    console.log(variables);
 }
 
 numberButtons.forEach(numberButton => numberButton.addEventListener('click', collectNumbers))
-
+operatorButtons.forEach(operatorButton => operatorButton.addEventListener('click', collectOperator))
+// equalButton.addEventListener('click', operate(variables));
 
 // Not sure if this will be needed for this project
 // function sum(array) {
