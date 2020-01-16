@@ -90,7 +90,6 @@ function collectData() {
             console.log('clear');
             break;
         case 'backspace':
-            console.log('backspace');
             backspaceNumberOrOperator()
             break;
         case 'plus':
@@ -138,16 +137,24 @@ function isDoubleOperator() {
     }
 }
 
-// Need to backspace once for number and 3 times for an operator
+// If the last item was a number - remove the last item of displayNumber and rawData
+// If the last itme was an operator - remove the last item & spaces of rawData only
 function backspaceNumberOrOperator() {
     if (rawData.charAt(rawData.length - 1).match(/\d/)) {
-        console.log('Delete 1 space - number in rawData and displayNumber');
-        // let tempDisplay = displayNumber.slice(-1);
-        // displayNumber = tempDisplay;
-        // let tempRawData = rawData.slice(-1);
-        // rawData = tempRawData;
+        let displayArray = displayNumber.split('');
+        displayArray.pop();
+        let displayString = displayArray.join('');
+        displayNumber = displayString;
+        let rawDataArray = rawData.split('');
+        rawDataArray.pop();
+        let rawDataString = rawDataArray.join('');
+        rawData = rawDataString;
     } else {
-        console.log('Delete 3 spaces - space, operator, space only in rawData')
+        let rawDataArray = rawData.split(' ');
+        rawDataArray.pop();
+        rawDataArray.pop();
+        let rawDataString = rawDataArray.join(' ');
+        rawData = rawDataString;
     }
 }
 
