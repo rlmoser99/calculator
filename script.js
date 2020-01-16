@@ -107,13 +107,20 @@ function collectData() {
             console.log('positive negative switch');
             break;
         case 'factorial':
-            console.log('Need to create a way for numbers to not come after factorial');
-            rawData = rawData + '!';
-            displayNumber = '';
+            if (hasPreviousNumber() === true) {
+                rawData = rawData + '!';
+                displayNumber = displayNumber + '!';
+            } else {
+                alert('You must select a number before using a factorial "!"')
+            }
             break;
         case 'exponent':
-            displayNumber = displayNumber + '^';
-            rawData = rawData + '^';
+            if (hasPreviousNumber() === true) {
+                rawData = rawData + '^';
+                displayNumber = displayNumber + '^';
+            } else {
+                alert('You must select the first number "x" before using the exponent for the number "y"')
+            }
             break;
         case 'clear':
             console.log('clear');
@@ -122,28 +129,37 @@ function collectData() {
             backspaceNumberOrOperator()
             break;
         case 'plus':
+            // if (isDoubleOperator() === false && hasPreviousNumber() === true) {
             if (isDoubleOperator() === false) {
                 rawData = rawData + ' + ';
+                displayNumber = '';
+            } else {
+                alert('You must have a number before choosing "+" ')
             }
-            displayNumber = '';
             break;
         case 'minus':
             if (isDoubleOperator() === false) {
                 rawData = rawData + ' - ';
+                displayNumber = '';
+            } else {
+                alert('You must have a number before choosing "-" ')
             }
-            displayNumber = '';
             break;
         case 'times':
             if (isDoubleOperator() === false) {
                 rawData = rawData + ' * ';
+                displayNumber = '';
+            } else {
+                alert('You must have a number before choosing "*" ')
             }
-            displayNumber = '';
             break;
         case 'divide':
             if (isDoubleOperator() === false) {
                 rawData = rawData + ' / ';
+                displayNumber = '';
+            } else {
+                alert('You must have a number before choosing "/" ')
             }
-            displayNumber = '';
             break;
         case 'equals':
             calculateData();
@@ -163,14 +179,14 @@ function isDoubleOperator() {
     if (rawData.charAt(rawData.length - 1).match(/[\d!\.]/)) {
         return false;
     } else {
-        alert('Please enter a number. You can not choose two math operators')
+        // alert('Please enter a number. You can not choose two math operators')
     }
 }
 
 // Check to see if a user clicks on a number immediately after choosing factorial (for example: 3!4)
 function hasPreviousFactorial() {
     if (rawData.charAt(rawData.length - 1).match(/!/)) {
-        alert('Please enter a math operator after using the factorial operator');
+        // alert('Please enter a math operator after using the factorial operator');
         return true;
     } else {
         return false;
@@ -180,17 +196,25 @@ function hasPreviousFactorial() {
 // Check to see if user clicked on period twice in the same number (for example: 3.14.159)
 function hasPreviousPeriod() {
     if (displayNumber.match(/\./)) {
-        alert('You can not enter more then 1 decimal point in a number');
+        // alert('You can not enter more then 1 decimal point in a number');
         return true;
     } else {
         return false;
     }
 }
 
-// Check to see if there is a number preceding the math operators
+// Check to see if there is a number preceding for factorial and exponent (maybe period and +/-)
+function hasPreviousNumber() {
+    if (displayNumber.charAt(displayNumber.length - 1).match(/\d/)) {
+        console.log(displayNumber);
+        return true;
+    } else {
+        // alert('Please enter a number before choosing a math operators');
+        return false;
+    }
+}
 
 
-// Check to see if there is a number preceding the period. Will need to add an 0.
 
 
 // If the last item was a number - remove the last item of displayNumber and rawData
@@ -276,7 +300,7 @@ function calcData() {
     // Step 5: Replace raw data with the result of the multiplication
     // NEED BETTER NAME!!!
     let noTimesData = timesRegExp[Symbol.replace](rawData, timesResult)
-    console.log(noTimesData);
+    // console.log(noTimesData);
 }
 
 // calcData();
@@ -287,12 +311,12 @@ let rawDataTest = '10+3*1.2/6-4'
 function calcDataTest() { 
     // NEED TO DO LEFT TO RIGHT, so FIND MULT OR DIV THEN DECIDE
     // Need to do one match symbol at a time
-    console.log(rawDataTest);
+    // console.log(rawDataTest);
     // Step 1: Define the Regex Pattern to Find - and keep for .replace 
     let timesRegExp = /\d+\.?\d?\*\d+\.?\d?/;
     // Step 2: Define what matches the regex
     let timesMatch = rawDataTest.match(timesRegExp);
-    console.log(timesMatch);
+    // console.log(timesMatch);
     // Step 3: Turn the matched pattern into a string and split it at the match symbol
     let timesString = timesMatch.toString().split('*');
     // console.log(timesString);
@@ -302,10 +326,16 @@ function calcDataTest() {
     // Step 5: Replace raw data with the result of the multiplication
     // NEED BETTER NAME
     let noTimesData = timesRegExp[Symbol.replace](rawDataTest, timesResult)
-    console.log(noTimesData);
+    // console.log(noTimesData);
     // Will need to limit the length of the number
 }
 
 calcDataTest();
 
-
+// TO DO:
+// Need to fix Backspace with period and factorials
+// Check to see if there is a number preceding the period. Will need to add an 0.
+// Set-Up the Equal button
+// Store the Result of the equal button to use again.
+// Round large numbers / decimals points
+// Add keyboard input
