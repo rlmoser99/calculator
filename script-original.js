@@ -1,30 +1,22 @@
-// This file worked on 1/15/20 to do a basic 2 digit equation. I am going to re-work my logic and want to be able to easily test out my idea.
+// This file worked on 1/16. Started to refactor when displayNumber becomes part of rawData
 
-const numberButtons = document.querySelectorAll('.number');
+const calcButtons = document.querySelectorAll('button');
 const display = document.querySelector('.display');
-const operatorButtons = document.querySelectorAll('.operator');
-// const equalButton = document.querySelector('.equal');
+const rawDisplay = document.querySelector('.raw-display');
 let displayNumber = '';
-let currentOperator = ''; 
-var variables = [];
-let result = '';
+let rawData = '';
+// let result = '';
 
 function add(a, b) {
-    // console.log('add ran');
     result = a + b;
-    console.log(result);
-    display.textContent = result;
 }
 
 function subtract(a, b) {
     result = a - b;
-    // console.log(result);
-    display.textContent = result;
 }
 
 function multiply(a, b) {
     result = a * b;
-    display.textContent = result;
 }
 
 function divide(a, b) {
@@ -34,141 +26,332 @@ function divide(a, b) {
     } else {
         result = a / b;
     }
-    display.textContent = result;
 }
 
-function operate([a, operator, b]) {
-    a = +a;
-    b = +b;
-    // console.log([a, operator, b]);
-    // console.log('operate ran');
-    // console.log(operator);
-    switch (operator) {
-        case 'plus':
-            // console.log('plus in operate ran');
-            return add(a, b);
-        case 'minus':
-            return subtract(a, b);
-        case 'times':
-            return multiply(a, b);
-        case 'divide':
-            return divide(a, b);
-        default:
-            break;
-    }
-}
-
-function collectNumbers() {    
+function collectData() {    
     // console.log(this.id);   
     switch(this.id) {
         case 'zero':
-            displayNumber = displayNumber + '0';
+            if (hasPreviousFactorial() === false) {
+                displayNumber = displayNumber + '0';
+                rawData = rawData + '0';
+            }
             break;
         case 'nine':
-            displayNumber = displayNumber + '9';
+            if (hasPreviousFactorial() === false) {
+                displayNumber = displayNumber + '9';
+                rawData = rawData + '9';
+            }
             break;
         case 'eight':
-            displayNumber = displayNumber + '8';
+            if (hasPreviousFactorial() === false) {
+                displayNumber = displayNumber + '8';
+                rawData = rawData + '8';
+            }
             break;
         case 'seven':
-            displayNumber = displayNumber + '7';
+            if (hasPreviousFactorial() === false) {
+                displayNumber = displayNumber + '7';
+                rawData = rawData + '7';
+            }
             break;
         case 'six':
-            displayNumber = displayNumber + '6';
+            if (hasPreviousFactorial() === false) {
+                displayNumber = displayNumber + '6';
+                rawData = rawData + '6';
+            }
             break;
         case 'five':
-            displayNumber = displayNumber + '5';
+            if (hasPreviousFactorial() === false) {
+                displayNumber = displayNumber + '5';
+                rawData = rawData + '5';
+            }
             break;
         case 'four':
-            displayNumber = displayNumber + '4';
+            if (hasPreviousFactorial() === false) {
+                displayNumber = displayNumber + '4';
+                rawData = rawData + '4';
+            }
             break;
         case 'three':
-            displayNumber = displayNumber + '3';
+            if (hasPreviousFactorial() === false) {
+                displayNumber = displayNumber + '3';
+                rawData = rawData + '3';
+            }
             break;
         case 'two':
-            displayNumber = displayNumber + '2';
+            if (hasPreviousFactorial() === false) {
+                displayNumber = displayNumber + '2';
+                rawData = rawData + '2';
+            }
             break;
         case 'one':
-            displayNumber = displayNumber + '1';
+            if (hasPreviousFactorial() === false) {
+                displayNumber = displayNumber + '1';
+                rawData = rawData + '1';
+            }
             break;
         case 'period':
-            console.log('period is not working yet');
+            if (hasPreviousFactorial() === false && hasPreviousPeriod() === false) {
+                displayNumber = displayNumber + '.';
+                rawData = rawData + '.';
+            }
+            break;
+        case 'clear':
+            let clearConfirm = confirm('Are you sure you want to clear everything?');
+            if (clearConfirm) {
+                displayNumber = '';
+                rawData = '';
+            }
+            break;
+        case 'pos-neg':
+            // console.log('positive negative switch');
+            switchPositiveNegative();
+            break;
+        case 'factorial':
+            if (hasPreviousNumber() === true) {
+                rawData = rawData + '!';
+                displayNumber = displayNumber + '!';
+            } else {
+                alert('You must select a number before using a factorial "!"')
+            }
+            break;
+        case 'exponent':
+            if (hasPreviousNumber() === true) {
+                rawData = rawData + '^';
+                displayNumber = displayNumber + '^';
+            } else {
+                alert('You must select the first number "x" before using the exponent for the number "y"')
+            }
+            break;
+        case 'backspace':
+            backspaceNumberOrOperator()
+            break;
+        case 'plus':
+            if (isDoubleOperator() === false) {
+                rawData = rawData + ' + ';
+                displayNumber = '';
+            } else {
+                alert('You must have a number before choosing "+" ')
+            }
+            break;
+        case 'minus':
+            if (isDoubleOperator() === false) {
+                rawData = rawData + ' - ';
+                displayNumber = '';
+            } else {
+                alert('You must have a number before choosing "-" ')
+            }
+            break;
+        case 'times':
+            if (isDoubleOperator() === false) {
+                rawData = rawData + ' * ';
+                displayNumber = '';
+            } else {
+                alert('You must have a number before choosing "*" ')
+            }
+            break;
+        case 'divide':
+            if (isDoubleOperator() === false) {
+                rawData = rawData + ' / ';
+                displayNumber = '';
+            } else {
+                alert('You must have a number before choosing "/" ')
+            }
+            break;
+        case 'equals':
+            calculateData();
             break;
         default:
             console.log('default for collectNumbers');
             break;
         }
     display.textContent = displayNumber;
-    // console.log(displayNumber);        
+    rawDisplay.textContent = rawData;
+    // console.log(rawData);        
 }
 
-function collectOperator() {
-    // console.log(displayNumber);
-    // console.log(this.id);
-    storeVariables(displayNumber);
-    displayNumber = '';
-    switch(this.id) {
-        case 'clear':
-            console.log('clear');
-            break;
-        case 'pos-neg':
-            console.log('positive negative switch');
-            break;
-        case 'para':
-            console.log('parenthesis');
-            break;
-        case 'clear':
-            console.log('clear');
-            break;
-        case 'backspace':
-            console.log('backspace');
-            break;
-        case 'plus':
-            // currentOperator = 'plus';
-            storeVariables('plus');
-            break;
-        case 'minus':
-            // currentOperator = 'minus';
-            storeVariables('minus');
-            break;
-        case 'times':
-            // currentOperator = 'times';
-            storeVariables('times');
-            break;
-        case 'divide':
-            // currentOperator = 'divide';
-            storeVariables('divide');
-            break;
-        case 'equals':
-            return operate(variables);
-            break;
-        default:
-            console.log('default for collectOperators');
-            break;
+// Check to see if user clicks two math operators back to back (for example: + - )
+// Exception: factorial (!) and period (.)
+function isDoubleOperator() {
+    if (rawData.charAt(rawData.length - 1).match(/[\d!\.]/)) {
+        return false;
+    } else {
+        // alert('Please enter a number. You can not choose two math operators')
     }
-    // console.log(currentOperator);
-    // storeVariables(currentOperator);
 }
 
-function storeVariables(a) {
-    variables.push(a);
-    console.log(variables);
+// Check to see if a user clicks on a number immediately after choosing factorial (for example: 3!4)
+function hasPreviousFactorial() {
+    if (rawData.charAt(rawData.length - 1).match(/!/)) {
+        // alert('Please enter a math operator after using the factorial operator');
+        return true;
+    } else {
+        return false;
+    }
 }
 
-numberButtons.forEach(numberButton => numberButton.addEventListener('click', collectNumbers))
-operatorButtons.forEach(operatorButton => operatorButton.addEventListener('click', collectOperator))
-// equalButton.addEventListener('click', operate(variables));
+// Check to see if user clicked on period twice in the same number (for example: 3.14.159)
+function hasPreviousPeriod() {
+    if (displayNumber.match(/\./)) {
+        // alert('You can not enter more then 1 decimal point in a number');
+        return true;
+    } else {
+        return false;
+    }
+}
 
-// Not sure if this will be needed for this project
-// function sum(array) {
-// 	return array.reduce((total, current) => total + current, 0);
-// }
+// Check to see if there is a number preceding for factorial and exponent (maybe period and +/-)
+function hasPreviousNumber() {
+    if (displayNumber.charAt(displayNumber.length - 1).match(/\d/)) {
+        return true;
+    } else {
+        return false;
+    }
+}
 
-// Not sure if I will need this to be in an array
-// function multiply(array) {
-//     if(!array.length){
-//         return 0;
-//     }
-//     return array.reduce((accumulator, nextItem) => accumulator * nextItem);
-// }
+// If the last item was a number - remove the last item of displayNumber and rawData
+// If the last itme was an operator - remove the last item & spaces of rawData only
+function backspaceNumberOrOperator() {
+    if (rawData.charAt(rawData.length - 1).match(/[\d!\.]/)) {
+        let displayArray = displayNumber.split('');
+        displayArray.pop();
+        let displayString = displayArray.join('');
+        displayNumber = displayString;
+        let rawDataArray = rawData.split('');
+        rawDataArray.pop();
+        let rawDataString = rawDataArray.join('');
+        rawData = rawDataString;
+    } else {
+        let rawDataArray = rawData.split(' ');
+        rawDataArray.pop();
+        rawDataArray.pop();
+        let rawDataString = rawDataArray.join(' ');
+        rawData = rawDataString;
+    }
+}
 
+// If there is no display number, add '-' to display & raw
+// If there is a positive display number, add '-' to display & raw
+// If there is a negative display number, remove '-' from display & raw
+function switchPositiveNegative() {
+    // console.log(displayNumber.length);
+    if (displayNumber.length == 0) {
+        // console.log('display is empty');
+        rawData = rawData + '-';
+        displayNumber = '-';
+    } else {
+        console.log('If statement(s) did not reqister');
+        let displayArray = displayNumber.split('');
+        console.log(displayArray);
+        if (displayArray[0].match(/-/)) {
+            console.log('Display is negative');
+            displayArray.shift();
+            let displayString = displayArray.join('');
+            displayNumber = displayString;
+        } else {
+            console.log('display was positive switched to negative');
+            displayArray.unshift('-');
+            let displayString = displayArray.join('');
+            displayNumber = displayString;
+            console.log('Need to alter rawData')
+            let rawDataArray = rawData.split(' ');
+            console.log(rawDataArray);
+        }
+        // displayArray.pop();
+        
+        
+        // let rawDataArray = rawData.split('');
+        // rawDataArray.pop();
+        // let rawDataString = rawDataArray.join('');
+        // rawData = rawDataString;
+    }
+}
+
+function calculateData() {
+    // Need to define the order of operations.
+    console.log(`calculateData ran ${rawData}`)
+}
+
+calcButtons.forEach(calcButton => calcButton.addEventListener('click', collectData))
+
+// ORDER OF OPERATIONS:
+// Parenthesis
+// Factorial
+// Exponentiation
+// Multiplication and division - left to right
+// Addition and subtraction - left to right
+
+// rawData with 2 multiplication signs
+// let rawData = '10+3*12-6*4'
+
+// let rawData = '10+3*12/6-4'
+// rawData should equal 12
+
+// let timesData = new RegEx('/d+)\*(/d+)/', 'g');
+// rawData.match(timesData);
+
+function multiplyData([a, b]) {
+    // console.log(a * b);
+    // display.textContent = result;
+    return a * b;
+}
+
+function calcData() { 
+    // NEED TO DO LEFT TO RIGHT, so FIND MULT OR DIV THEN DECIDE
+    // Need to do one match symbol at a time
+    console.log(rawData);
+    // Step 1: Define the Regex Pattern to Find - and keep for .replace 
+    let timesRegExp = /\d+\*\d+/;
+    // Step 2: Define what matches the regex
+    let timesMatch = rawData.match(timesRegExp);
+    // console.log(timesMatch);
+    // Step 3: Turn the matched pattern into a string and split it at the match symbol
+    let timesString = timesMatch.toString().split('*');
+    // console.log(timesString);
+    // Step 4: Multiply the two digits on each side of the symbol
+    timesResult = multiplyData(timesString);
+    // console.log(timesFinal);
+    // Step 5: Replace raw data with the result of the multiplication
+    // NEED BETTER NAME!!!
+    let noTimesData = timesRegExp[Symbol.replace](rawData, timesResult)
+    // console.log(noTimesData);
+}
+
+// calcData();
+
+// Want to make sure it works with periods!!!
+
+let rawDataTest = '10+3*1.2/6-4'
+function calcDataTest() { 
+    // NEED TO DO LEFT TO RIGHT, so FIND MULT OR DIV THEN DECIDE
+    // Need to do one match symbol at a time
+    // console.log(rawDataTest);
+    // Step 1: Define the Regex Pattern to Find - and keep for .replace 
+    let timesRegExp = /\d+\.?\d?\*\d+\.?\d?/;
+    // Step 2: Define what matches the regex
+    let timesMatch = rawDataTest.match(timesRegExp);
+    // console.log(timesMatch);
+    // Step 3: Turn the matched pattern into a string and split it at the match symbol
+    let timesString = timesMatch.toString().split('*');
+    // console.log(timesString);
+    // Step 4: Multiply the two digits on each side of the symbol
+    timesResult = multiplyData(timesString);
+    // console.log(timesFinal);
+    // Step 5: Replace raw data with the result of the multiplication
+    // NEED BETTER NAME
+    let noTimesData = timesRegExp[Symbol.replace](rawDataTest, timesResult)
+    // console.log(noTimesData);
+    // Will need to limit the length of the number
+}
+
+calcDataTest();
+
+// TO DO:
+// Set-Up plus-minus button function - alter when display data goes to rawData
+// Put a 'x' on ! button
+// Check to see if there is a number preceding the period. Will need to add an 0.
+// Set-Up the Equal button
+// Store the Result of the equal button to use again.
+// Round large numbers / decimals points
+// Add keyboard input
