@@ -74,7 +74,11 @@ function collectData() {
             console.log('period is not working yet');
             break;
         case 'clear':
-            console.log('clear');
+            let clearConfirm = confirm('Are you sure you want to clear everything?');
+            if (clearConfirm) {
+                displayNumber = '';
+                rawData = '';
+            }
             break;
         case 'pos-neg':
             console.log('positive negative switch');
@@ -121,7 +125,7 @@ function collectData() {
         }
     display.textContent = displayNumber;
     rawDisplay.textContent = rawData;
-    console.log(rawData);        
+    // console.log(rawData);        
 }
 
 // Check to see if user clicks two math operators back to back (for example: + - )
