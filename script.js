@@ -91,6 +91,7 @@ function collectData() {
             break;
         case 'backspace':
             console.log('backspace');
+            backspaceNumberOrOperator()
             break;
         case 'plus':
             if (isDoubleOperator() === false) {
@@ -134,6 +135,19 @@ function isDoubleOperator() {
         return false;
     } else {
         alert('Please enter a number. You can not choose two math operators')
+    }
+}
+
+// Need to backspace once for number and 3 times for an operator
+function backspaceNumberOrOperator() {
+    if (rawData.charAt(rawData.length - 1).match(/\d/)) {
+        console.log('Delete 1 space - number in rawData and displayNumber');
+        // let tempDisplay = displayNumber.slice(-1);
+        // displayNumber = tempDisplay;
+        // let tempRawData = rawData.slice(-1);
+        // rawData = tempRawData;
+    } else {
+        console.log('Delete 3 spaces - space, operator, space only in rawData')
     }
 }
 
