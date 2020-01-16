@@ -103,7 +103,8 @@ function collectData() {
             }
             break;
         case 'pos-neg':
-            console.log('positive negative switch');
+            // console.log('positive negative switch');
+            switchPositiveNegative();
             break;
         case 'factorial':
             if (hasPreviousNumber() === true) {
@@ -125,7 +126,6 @@ function collectData() {
             backspaceNumberOrOperator()
             break;
         case 'plus':
-            // if (isDoubleOperator() === false && hasPreviousNumber() === true) {
             if (isDoubleOperator() === false) {
                 rawData = rawData + ' + ';
                 displayNumber = '';
@@ -229,6 +229,43 @@ function backspaceNumberOrOperator() {
     }
 }
 
+// If there is no display number, add '-' to display & raw
+// If there is a positive display number, add '-' to display & raw
+// If there is a negative display number, remove '-' from display & raw
+function switchPositiveNegative() {
+    // console.log(displayNumber.length);
+    if (displayNumber.length == 0) {
+        // console.log('display is empty');
+        rawData = rawData + '-';
+        displayNumber = '-';
+    } else {
+        console.log('If statement(s) did not reqister');
+        let displayArray = displayNumber.split('');
+        console.log(displayArray);
+        if (displayArray[0].match(/-/)) {
+            console.log('Display is negative');
+            displayArray.shift();
+            let displayString = displayArray.join('');
+            displayNumber = displayString;
+        } else {
+            console.log('display was positive switched to negative');
+            displayArray.unshift('-');
+            let displayString = displayArray.join('');
+            displayNumber = displayString;
+            console.log('Need to alter rawData')
+            let rawDataArray = rawData.split(' ');
+            console.log(rawDataArray);
+        }
+        // displayArray.pop();
+        
+        
+        // let rawDataArray = rawData.split('');
+        // rawDataArray.pop();
+        // let rawDataString = rawDataArray.join('');
+        // rawData = rawDataString;
+    }
+}
+
 function calculateData() {
     // Need to define the order of operations.
     console.log(`calculateData ran ${rawData}`)
@@ -309,6 +346,8 @@ function calcDataTest() {
 calcDataTest();
 
 // TO DO:
+// Set-Up plus-minus button function - alter when display data goes to rawData
+// Put a 'x' on ! button
 // Check to see if there is a number preceding the period. Will need to add an 0.
 // Set-Up the Equal button
 // Store the Result of the equal button to use again.
