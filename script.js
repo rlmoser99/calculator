@@ -3,7 +3,6 @@ const display = document.querySelector('.display');
 const rawDisplay = document.querySelector('.raw-display');
 let displayNumber = '';
 let rawData = '';
-// const equalButton = document.querySelector('.equal');
 // let result = '';
 
 function add(a, b) {
@@ -122,9 +121,6 @@ function collectData() {
                 alert('You must select the first number "x" before using the exponent for the number "y"')
             }
             break;
-        case 'clear':
-            console.log('clear');
-            break;
         case 'backspace':
             backspaceNumberOrOperator()
             break;
@@ -206,22 +202,16 @@ function hasPreviousPeriod() {
 // Check to see if there is a number preceding for factorial and exponent (maybe period and +/-)
 function hasPreviousNumber() {
     if (displayNumber.charAt(displayNumber.length - 1).match(/\d/)) {
-        console.log(displayNumber);
         return true;
     } else {
-        // alert('Please enter a number before choosing a math operators');
         return false;
     }
 }
 
-
-
-
 // If the last item was a number - remove the last item of displayNumber and rawData
 // If the last itme was an operator - remove the last item & spaces of rawData only
 function backspaceNumberOrOperator() {
-    console.log('backspace does not work perfect with factorials & displayNumber')
-    if (rawData.charAt(rawData.length - 1).match(/[\d!]/)) {
+    if (rawData.charAt(rawData.length - 1).match(/[\d!\.]/)) {
         let displayArray = displayNumber.split('');
         displayArray.pop();
         let displayString = displayArray.join('');
@@ -241,31 +231,17 @@ function backspaceNumberOrOperator() {
 
 function calculateData() {
     // Need to define the order of operations.
-    console.log('calculateData ran')
+    console.log(`calculateData ran ${rawData}`)
 }
 
 calcButtons.forEach(calcButton => calcButton.addEventListener('click', collectData))
 
-// equalButton.addEventListener('click', operate(variables));
-
-// Not sure if this will be needed for this project
-// function sum(array) {
-// 	return array.reduce((total, current) => total + current, 0);
-// }
-
-// Not sure if I will need this to be in an array
-// function multiply(array) {
-//     if(!array.length){
-//         return 0;
-//     }
-//     return array.reduce((accumulator, nextItem) => accumulator * nextItem);
-// }
-
 // ORDER OF OPERATIONS:
-// Parentheses (simplify inside 'em)
-// Exponents
-// Multiplication and Division (from left to right)
-// Addition and Subtraction (from left to right)
+// Parenthesis
+// Factorial
+// Exponentiation
+// Multiplication and division - left to right
+// Addition and subtraction - left to right
 
 // rawData with 2 multiplication signs
 // let rawData = '10+3*12-6*4'
@@ -333,7 +309,6 @@ function calcDataTest() {
 calcDataTest();
 
 // TO DO:
-// Need to fix Backspace with period and factorials
 // Check to see if there is a number preceding the period. Will need to add an 0.
 // Set-Up the Equal button
 // Store the Result of the equal button to use again.
