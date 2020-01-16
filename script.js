@@ -32,67 +32,56 @@ function collectData() {
         case 'zero':
             if (hasPreviousFactorial() === false) {
                 displayNumber = displayNumber + '0';
-                rawData = rawData + '0';
             }
             break;
         case 'nine':
             if (hasPreviousFactorial() === false) {
                 displayNumber = displayNumber + '9';
-                rawData = rawData + '9';
             }
             break;
         case 'eight':
             if (hasPreviousFactorial() === false) {
                 displayNumber = displayNumber + '8';
-                rawData = rawData + '8';
             }
             break;
         case 'seven':
             if (hasPreviousFactorial() === false) {
                 displayNumber = displayNumber + '7';
-                rawData = rawData + '7';
             }
             break;
         case 'six':
             if (hasPreviousFactorial() === false) {
                 displayNumber = displayNumber + '6';
-                rawData = rawData + '6';
             }
             break;
         case 'five':
             if (hasPreviousFactorial() === false) {
                 displayNumber = displayNumber + '5';
-                rawData = rawData + '5';
             }
             break;
         case 'four':
             if (hasPreviousFactorial() === false) {
                 displayNumber = displayNumber + '4';
-                rawData = rawData + '4';
             }
             break;
         case 'three':
             if (hasPreviousFactorial() === false) {
                 displayNumber = displayNumber + '3';
-                rawData = rawData + '3';
             }
             break;
         case 'two':
             if (hasPreviousFactorial() === false) {
                 displayNumber = displayNumber + '2';
-                rawData = rawData + '2';
             }
             break;
         case 'one':
             if (hasPreviousFactorial() === false) {
                 displayNumber = displayNumber + '1';
-                rawData = rawData + '1';
             }
             break;
         case 'period':
             if (hasPreviousFactorial() === false && hasPreviousPeriod() === false) {
                 displayNumber = displayNumber + '.';
-                rawData = rawData + '.';
             }
             break;
         case 'clear':
@@ -108,15 +97,15 @@ function collectData() {
             break;
         case 'factorial':
             if (hasPreviousNumber() === true) {
-                rawData = rawData + '!';
                 displayNumber = displayNumber + '!';
+                addDisplayToRaw();
+                displayNumber = '';
             } else {
                 alert('You must select a number before using a factorial "!"')
             }
             break;
         case 'exponent':
             if (hasPreviousNumber() === true) {
-                rawData = rawData + '^';
                 displayNumber = displayNumber + '^';
             } else {
                 alert('You must select the first number "x" before using the exponent for the number "y"')
@@ -127,6 +116,7 @@ function collectData() {
             break;
         case 'plus':
             if (isDoubleOperator() === false) {
+                addDisplayToRaw();
                 rawData = rawData + ' + ';
                 displayNumber = '';
             } else {
@@ -135,6 +125,7 @@ function collectData() {
             break;
         case 'minus':
             if (isDoubleOperator() === false) {
+                addDisplayToRaw();
                 rawData = rawData + ' - ';
                 displayNumber = '';
             } else {
@@ -143,6 +134,7 @@ function collectData() {
             break;
         case 'times':
             if (isDoubleOperator() === false) {
+                addDisplayToRaw();
                 rawData = rawData + ' * ';
                 displayNumber = '';
             } else {
@@ -151,6 +143,7 @@ function collectData() {
             break;
         case 'divide':
             if (isDoubleOperator() === false) {
+                addDisplayToRaw();
                 rawData = rawData + ' / ';
                 displayNumber = '';
             } else {
@@ -158,31 +151,34 @@ function collectData() {
             }
             break;
         case 'equals':
+            addDisplayToRaw();
+            displayNumber = '';
             calculateData();
             break;
         default:
             console.log('default for collectNumbers');
             break;
-        }
+    }
     display.textContent = displayNumber;
     rawDisplay.textContent = rawData;
-    // console.log(rawData);        
+    // console.log(rawData);
+       
 }
 
-// Check to see if user clicks two math operators back to back (for example: + - )
+// Check to see if user clicks two math operators back to back
 // Exception: factorial (!) and period (.)
 function isDoubleOperator() {
-    if (rawData.charAt(rawData.length - 1).match(/[\d!\.]/)) {
+    if (displayNumber.length != 0 || (rawData.charAt(rawData.length - 1).match(/[\d!\.]/))) {
         return false;
     } else {
-        // alert('Please enter a number. You can not choose two math operators')
+        return true;
     }
 }
 
 // Check to see if a user clicks on a number immediately after choosing factorial (for example: 3!4)
 function hasPreviousFactorial() {
     if (rawData.charAt(rawData.length - 1).match(/!/)) {
-        // alert('Please enter a math operator after using the factorial operator');
+        alert('Please enter a math operator after using the factorial operator');
         return true;
     } else {
         return false;
@@ -199,7 +195,7 @@ function hasPreviousPeriod() {
     }
 }
 
-// Check to see if there is a number preceding for factorial and exponent (maybe period and +/-)
+// Check to see if there is a number preceding for factorial and exponent
 function hasPreviousNumber() {
     if (displayNumber.charAt(displayNumber.length - 1).match(/\d/)) {
         return true;
@@ -211,22 +207,32 @@ function hasPreviousNumber() {
 // If the last item was a number - remove the last item of displayNumber and rawData
 // If the last itme was an operator - remove the last item & spaces of rawData only
 function backspaceNumberOrOperator() {
-    if (rawData.charAt(rawData.length - 1).match(/[\d!\.]/)) {
-        let displayArray = displayNumber.split('');
-        displayArray.pop();
-        let displayString = displayArray.join('');
-        displayNumber = displayString;
-        let rawDataArray = rawData.split('');
-        rawDataArray.pop();
-        let rawDataString = rawDataArray.join('');
-        rawData = rawDataString;
-    } else {
+    let displayArray = displayNumber.split('');
+    displayArray.pop();
+    let displayString = displayArray.join('');
+    displayNumber = displayString;
+    if (displayNumber.length == 0) {
+        console.log('there is no display, only raw to work with');
         let rawDataArray = rawData.split(' ');
-        rawDataArray.pop();
-        rawDataArray.pop();
-        let rawDataString = rawDataArray.join(' ');
-        rawData = rawDataString;
+        console.log(rawDataArray)
+        // rawDataArray.pop();
+        // console.log(rawDataArray)
+        // rawDataArray.pop();
+        // let rawDataString = rawDataArray.join(' ');
+        // rawData = rawDataString;
     }
+    // if (rawData.charAt(rawData.length - 1).match(/[\d!\.]/)) {   
+    //     let rawDataArray = rawData.split('');
+    //     rawDataArray.pop();
+    //     let rawDataString = rawDataArray.join('');
+    //     rawData = rawDataString;
+    // } else {
+        // let rawDataArray = rawData.split(' ');
+        // rawDataArray.pop();
+        // rawDataArray.pop();
+        // let rawDataString = rawDataArray.join(' ');
+        // rawData = rawDataString;
+    // }
 }
 
 // If there is no display number, add '-' to display & raw
@@ -264,6 +270,11 @@ function switchPositiveNegative() {
         // let rawDataString = rawDataArray.join('');
         // rawData = rawDataString;
     }
+}
+
+// Add displayNumber to the end of rawData string
+function addDisplayToRaw() {
+    rawData = rawData + displayNumber;
 }
 
 function calculateData() {
@@ -347,9 +358,13 @@ calcDataTest();
 
 // TO DO:
 // Set-Up plus-minus button function - alter when display data goes to rawData
+// Check factorial for whole number.
+// Check to see if re-factor broke backspace
+// 2!+ is broken
 // Put a 'x' on ! button
 // Check to see if there is a number preceding the period. Will need to add an 0.
 // Set-Up the Equal button
 // Store the Result of the equal button to use again.
 // Round large numbers / decimals points
-// Add keyboard input
+// Add keyboard
+// asdfasd
