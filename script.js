@@ -89,19 +89,27 @@ function collectData() {
             console.log('backspace');
             break;
         case 'plus':
-            rawData = rawData + ' + ';
+            if (isDoubleOperator() === false) {
+                rawData = rawData + ' + ';
+            }
             displayNumber = '';
             break;
         case 'minus':
-            rawData = rawData + ' - ';
+            if (isDoubleOperator() === false) {
+                rawData = rawData + ' - ';
+            }
             displayNumber = '';
             break;
         case 'times':
-            rawData = rawData + ' * ';
+            if (isDoubleOperator() === false) {
+                rawData = rawData + ' * ';
+            }
             displayNumber = '';
             break;
         case 'divide':
-            rawData = rawData + ' / ';
+            if (isDoubleOperator() === false) {
+                rawData = rawData + ' / ';
+            }
             displayNumber = '';
             break;
         case 'equals':
@@ -114,6 +122,15 @@ function collectData() {
     display.textContent = displayNumber;
     rawDisplay.textContent = rawData;
     console.log(rawData);        
+}
+
+// Check to see if user clicks two math operators back to back (for example: + - )
+function isDoubleOperator() {
+    if (rawData.charAt(rawData.length - 1).match(/\d/)) {
+        return false;
+    } else {
+        alert('Please enter a number. You can not choose two math operators')
+    }
 }
 
 calcButtons.forEach(calcButton => calcButton.addEventListener('click', collectData))

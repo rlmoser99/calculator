@@ -1,9 +1,11 @@
+/* Background pattern from Total Subtle Patterns */
+
 html {
     box-sizing: border-box;
 }
 
 body {
-    background-color: #d3d3d3;
+    background-image: url(../img/subtle_white_feathers/subtle_white_feathers.png)
 }
 
 .container {
