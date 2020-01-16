@@ -91,8 +91,10 @@ function collectData() {
             }
             break;
         case 'period':
-            hasPreviousFactorial()
-            console.log('period will affect backspace button');
+            if (hasPreviousFactorial() === false && hasPreviousPeriod() === false) {
+                displayNumber = displayNumber + '.';
+                rawData = rawData + '.';
+            }
             break;
         case 'clear':
             let clearConfirm = confirm('Are you sure you want to clear everything?');
@@ -156,23 +158,40 @@ function collectData() {
 }
 
 // Check to see if user clicks two math operators back to back (for example: + - )
+// Exception: factorial (!) and period (.)
 function isDoubleOperator() {
-    if (rawData.charAt(rawData.length - 1).match(/[\d!]/)) {
+    if (rawData.charAt(rawData.length - 1).match(/[\d!\.]/)) {
         return false;
     } else {
         alert('Please enter a number. You can not choose two math operators')
     }
 }
 
-// Check to see if a user clicks on a number immediately after choosing factorial
+// Check to see if a user clicks on a number immediately after choosing factorial (for example: 3!4)
 function hasPreviousFactorial() {
     if (rawData.charAt(rawData.length - 1).match(/!/)) {
-        alert('Please enter a math operator after using the factorial operator')
+        alert('Please enter a math operator after using the factorial operator');
         return true;
     } else {
         return false;
     }
 }
+
+// Check to see if user clicked on period twice in the same number (for example: 3.14.159)
+function hasPreviousPeriod() {
+    if (displayNumber.match(/\./)) {
+        alert('You can not enter more then 1 decimal point in a number');
+        return true;
+    } else {
+        return false;
+    }
+}
+
+// Check to see if there is a number preceding the math operators
+
+
+// Check to see if there is a number preceding the period. Will need to add an 0.
+
 
 // If the last item was a number - remove the last item of displayNumber and rawData
 // If the last itme was an operator - remove the last item & spaces of rawData only
