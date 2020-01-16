@@ -31,47 +31,68 @@ function collectData() {
     // console.log(this.id);   
     switch(this.id) {
         case 'zero':
-            displayNumber = displayNumber + '0';
-            rawData = rawData + '0';
+            if (hasPreviousFactorial() === false) {
+                displayNumber = displayNumber + '0';
+                rawData = rawData + '0';
+            }
             break;
         case 'nine':
-            displayNumber = displayNumber + '9';
-            rawData = rawData + '9';
+            if (hasPreviousFactorial() === false) {
+                displayNumber = displayNumber + '9';
+                rawData = rawData + '9';
+            }
             break;
         case 'eight':
-            displayNumber = displayNumber + '8';
-            rawData = rawData + '8';
+            if (hasPreviousFactorial() === false) {
+                displayNumber = displayNumber + '8';
+                rawData = rawData + '8';
+            }
             break;
         case 'seven':
-            displayNumber = displayNumber + '7';
-            rawData = rawData + '7';
+            if (hasPreviousFactorial() === false) {
+                displayNumber = displayNumber + '7';
+                rawData = rawData + '7';
+            }
             break;
         case 'six':
-            displayNumber = displayNumber + '6';
-            rawData = rawData + '6';
+            if (hasPreviousFactorial() === false) {
+                displayNumber = displayNumber + '6';
+                rawData = rawData + '6';
+            }
             break;
         case 'five':
-            displayNumber = displayNumber + '5';
-            rawData = rawData + '5';
+            if (hasPreviousFactorial() === false) {
+                displayNumber = displayNumber + '5';
+                rawData = rawData + '5';
+            }
             break;
         case 'four':
-            displayNumber = displayNumber + '4';
-            rawData = rawData + '4';
+            if (hasPreviousFactorial() === false) {
+                displayNumber = displayNumber + '4';
+                rawData = rawData + '4';
+            }
             break;
         case 'three':
-            displayNumber = displayNumber + '3';
-            rawData = rawData + '3';
+            if (hasPreviousFactorial() === false) {
+                displayNumber = displayNumber + '3';
+                rawData = rawData + '3';
+            }
             break;
         case 'two':
-            displayNumber = displayNumber + '2';
-            rawData = rawData + '2';
+            if (hasPreviousFactorial() === false) {
+                displayNumber = displayNumber + '2';
+                rawData = rawData + '2';
+            }
             break;
         case 'one':
-            displayNumber = displayNumber + '1';
-            rawData = rawData + '1';
+            if (hasPreviousFactorial() === false) {
+                displayNumber = displayNumber + '1';
+                rawData = rawData + '1';
+            }
             break;
         case 'period':
-            console.log('period is not working yet');
+            hasPreviousFactorial()
+            console.log('period will affect backspace button');
             break;
         case 'clear':
             let clearConfirm = confirm('Are you sure you want to clear everything?');
@@ -83,8 +104,14 @@ function collectData() {
         case 'pos-neg':
             console.log('positive negative switch');
             break;
-        case 'para':
-            console.log('parenthesis');
+        case 'factorial':
+            console.log('Need to create a way for numbers to not come after factorial');
+            rawData = rawData + '!';
+            displayNumber = '';
+            break;
+        case 'exponent':
+            displayNumber = displayNumber + '^';
+            rawData = rawData + '^';
             break;
         case 'clear':
             console.log('clear');
@@ -117,7 +144,7 @@ function collectData() {
             displayNumber = '';
             break;
         case 'equals':
-            console.log('equal button was clicked')
+            calculateData();
             break;
         default:
             console.log('default for collectNumbers');
@@ -130,17 +157,28 @@ function collectData() {
 
 // Check to see if user clicks two math operators back to back (for example: + - )
 function isDoubleOperator() {
-    if (rawData.charAt(rawData.length - 1).match(/\d/)) {
+    if (rawData.charAt(rawData.length - 1).match(/[\d!]/)) {
         return false;
     } else {
         alert('Please enter a number. You can not choose two math operators')
     }
 }
 
+// Check to see if a user clicks on a number immediately after choosing factorial
+function hasPreviousFactorial() {
+    if (rawData.charAt(rawData.length - 1).match(/!/)) {
+        alert('Please enter a math operator after using the factorial operator')
+        return true;
+    } else {
+        return false;
+    }
+}
+
 // If the last item was a number - remove the last item of displayNumber and rawData
 // If the last itme was an operator - remove the last item & spaces of rawData only
 function backspaceNumberOrOperator() {
-    if (rawData.charAt(rawData.length - 1).match(/\d/)) {
+    console.log('backspace does not work perfect with factorials & displayNumber')
+    if (rawData.charAt(rawData.length - 1).match(/[\d!]/)) {
         let displayArray = displayNumber.split('');
         displayArray.pop();
         let displayString = displayArray.join('');
@@ -156,6 +194,11 @@ function backspaceNumberOrOperator() {
         let rawDataString = rawDataArray.join(' ');
         rawData = rawDataString;
     }
+}
+
+function calculateData() {
+    // Need to define the order of operations.
+    console.log('calculateData ran')
 }
 
 calcButtons.forEach(calcButton => calcButton.addEventListener('click', collectData))
