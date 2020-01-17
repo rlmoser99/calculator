@@ -82,7 +82,10 @@ button img {
 
 button sup {
     vertical-align: top;
-    font-size: .75rem;
+    font-size: .9rem;
     height: 30px;
-    padding-left: 3px;
+}
+
+#factorial, #exponent {
+    letter-spacing: .1em;
 }

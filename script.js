@@ -80,8 +80,10 @@ function collectData() {
             }
             break;
         case 'period':
-            if (hasPreviousFactorial() === false && hasPreviousPeriod() === false) {
+            if (hasPreviousFactorial() === false && hasPreviousPeriod() === false && hasExponent() === false) {
                 displayNumber = displayNumber + '.';
+            } else {
+                alert('To use a decimal point, you can not have another decimal point, factorial, or exponent')
             }
             break;
         case 'clear':
@@ -92,23 +94,22 @@ function collectData() {
             }
             break;
         case 'pos-neg':
-            // console.log('positive negative switch');
             switchPositiveNegative();
             break;
         case 'factorial':
-            if (hasPreviousNumber() === true) {
+            if (hasPreviousNumber() === true && hasPreviousPeriod() === false) {
                 displayNumber = displayNumber + '!';
                 addDisplayToRaw();
                 displayNumber = '';
             } else {
-                alert('You must select a number before using a factorial "!"')
+                alert('You must a whole number before using a factorial "!"')
             }
             break;
         case 'exponent':
-            if (hasPreviousNumber() === true) {
+            if (hasPreviousNumber() === true && hasPreviousPeriod() === false) {
                 displayNumber = displayNumber + '^';
             } else {
-                alert('You must select the first number "x" before using the exponent for the number "y"')
+                alert('The whole number first number "x" before using the exponent for the number "y"')
             }
             break;
         case 'backspace':
@@ -161,8 +162,6 @@ function collectData() {
     }
     display.textContent = displayNumber;
     rawDisplay.textContent = rawData;
-    // console.log(rawData);
-       
 }
 
 // Check to see if user clicks two math operators back to back
@@ -189,6 +188,15 @@ function hasPreviousFactorial() {
 function hasPreviousPeriod() {
     if (displayNumber.match(/\./)) {
         // alert('You can not enter more then 1 decimal point in a number');
+        return true;
+    } else {
+        return false;
+    }
+}
+
+// Check for an exponent in number, before adding a decimal point.
+function hasExponent() {
+    if (displayNumber.match(/\^/)) {
         return true;
     } else {
         return false;
@@ -332,10 +340,6 @@ function calcDataTest() {
 calcDataTest();
 
 // TO DO:
-// Set-Up plus-minus button function - alter when display data goes to rawData
-// Check factorial for whole number.
-// 2!+ is broken
-// Put a 'x' on ! button
 // Check to see if there is a number preceding the period. Will need to add an 0.
 // Set-Up the Equal button
 // Store the Result of the equal button to use again.
