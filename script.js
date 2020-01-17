@@ -1,6 +1,7 @@
 const calcButtons = document.querySelectorAll('button');
 const display = document.querySelector('.display');
 const rawDisplay = document.querySelector('.raw-display');
+const warning = document.querySelector('.warning')
 let displayNumber = '';
 let rawData = '';
 // let result = '';
@@ -27,7 +28,8 @@ function divide(a, b) {
 }
 
 function collectData() {    
-    // console.log(this.id);   
+    // console.log(this.id);
+    warning.textContent = '';   
     switch(this.id) {
         case 'zero':
             if (hasPreviousFactorial() === false) {
@@ -85,7 +87,7 @@ function collectData() {
             } else if (hasPreviousFactorial() === false && hasPreviousPeriod() === false && hasExponent() === false) {
                 displayNumber = displayNumber + '.';
             } else {
-                alert('To use a decimal point, you can not have another decimal point, factorial, or exponent')
+                warning.textContent = "To use a decimal point, you can not have another decimal point, factorial, or exponent";
             }
             break;
         case 'clear':
@@ -104,14 +106,14 @@ function collectData() {
                 addDisplayToRaw();
                 displayNumber = '';
             } else {
-                alert('You must a whole number before using a factorial "!"')
+                warning.textContent = `You must use a whole number before using a factorial '!'`;
             }
             break;
         case 'exponent':
             if (hasPreviousNumber() === true && hasPreviousPeriod() === false) {
                 displayNumber = displayNumber + '^';
             } else {
-                alert('The whole number first number "x" before using the exponent for the number "y"')
+                warning.textContent = `A whole number 'x' must be selected before using the exponent for a whole number 'y'`;
             }
             break;
         case 'backspace':
@@ -123,6 +125,7 @@ function collectData() {
                 rawData = rawData + ' + ';
                 displayNumber = '';
             } else {
+                warning.textContent = `You must have a number before choosing '+'`
                 alert('You must have a number before choosing "+" ')
             }
             break;
@@ -132,7 +135,7 @@ function collectData() {
                 rawData = rawData + ' - ';
                 displayNumber = '';
             } else {
-                alert('You must have a number before choosing "-" ')
+                warning.textContent = `You must have a number before choosing '-'`
             }
             break;
         case 'times':
@@ -141,7 +144,7 @@ function collectData() {
                 rawData = rawData + ' * ';
                 displayNumber = '';
             } else {
-                alert('You must have a number before choosing "*" ')
+                warning.textContent = `You must have a number before choosing '*'`
             }
             break;
         case 'divide':
@@ -150,7 +153,7 @@ function collectData() {
                 rawData = rawData + ' / ';
                 displayNumber = '';
             } else {
-                alert('You must have a number before choosing "/" ')
+                warning.textContent = `You must have a number before choosing '/'`
             }
             break;
         case 'equals':
@@ -179,7 +182,9 @@ function isDoubleOperator() {
 // Check to see if a user clicks on a number immediately after choosing factorial (for example: 3!4)
 function hasPreviousFactorial() {
     if (rawData.charAt(rawData.length - 1).match(/!/) && displayNumber.length == 0) {
-        alert('Please enter a math operator after using the factorial operator');
+        if (warning.textContent.length == 0) {
+            warning.textContent = 'Please use a math operator after using a factorial'
+        }
         return true;
     } else {
         return false;
@@ -189,7 +194,6 @@ function hasPreviousFactorial() {
 // Check to see if user clicked on period twice in the same number (for example: 3.14.159)
 function hasPreviousPeriod() {
     if (displayNumber.match(/\./)) {
-        // alert('You can not enter more then 1 decimal point in a number');
         return true;
     } else {
         return false;
@@ -342,6 +346,7 @@ function calcDataTest() {
 calcDataTest();
 
 // TO DO: 
+// Prevent / 0 - check the rawData
 // Set-Up the Equal button
 // Store the Result of the equal button to use again.
 // Round large numbers / decimals points

@@ -111,3 +111,13 @@ button:hover {
     color: #00cfe6;
     outline: none;
 }
+
+.warning-container {
+    width: 400px;
+    margin: 15px auto;
+}
+
+.warning {
+    color: #273043;
+    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+}
