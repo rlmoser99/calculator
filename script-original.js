@@ -1,100 +1,105 @@
-// This file worked on 1/16. Started to refactor when displayNumber becomes part of rawData
+// File worked on 1/17 - re-working how many times calculate Data is ran.
 
 const calcButtons = document.querySelectorAll('button');
 const display = document.querySelector('.display');
 const rawDisplay = document.querySelector('.raw-display');
+const warning = document.querySelector('.warning')
 let displayNumber = '';
 let rawData = '';
 // let result = '';
 
 function add(a, b) {
-    result = a + b;
+    return a + b;
 }
 
 function subtract(a, b) {
-    result = a - b;
+    return a - b;
 }
 
 function multiply(a, b) {
-    result = a * b;
+    return a * b;
 }
 
 function divide(a, b) {
-    if (b === 0) {
-        alert("Can not divide by 0");
-        display.textContent = '';
-    } else {
-        result = a / b;
-    }
+    return a / b;
+}
+
+function factorial(a) {
+	if (a == 0) return 1;
+	let product = 1;
+	for (let i = a; i > 0; i--) {
+	  product *= i;
+	}
+	return product;
+}
+
+function exponent(a, b) {
+	return Math.pow(a, b);
 }
 
 function collectData() {    
-    // console.log(this.id);   
+    // console.log(this.id);
+    warning.textContent = '';   
     switch(this.id) {
         case 'zero':
-            if (hasPreviousFactorial() === false) {
+            if (hasPreviousFactorial() === false && hasDivision() === false ) {
                 displayNumber = displayNumber + '0';
-                rawData = rawData + '0';
+            } else {
+                warning.textContent = `You can not enter '0' directly after a division or factorial sign`;
             }
             break;
         case 'nine':
             if (hasPreviousFactorial() === false) {
                 displayNumber = displayNumber + '9';
-                rawData = rawData + '9';
             }
             break;
         case 'eight':
             if (hasPreviousFactorial() === false) {
                 displayNumber = displayNumber + '8';
-                rawData = rawData + '8';
             }
             break;
         case 'seven':
             if (hasPreviousFactorial() === false) {
                 displayNumber = displayNumber + '7';
-                rawData = rawData + '7';
             }
             break;
         case 'six':
             if (hasPreviousFactorial() === false) {
                 displayNumber = displayNumber + '6';
-                rawData = rawData + '6';
             }
             break;
         case 'five':
             if (hasPreviousFactorial() === false) {
                 displayNumber = displayNumber + '5';
-                rawData = rawData + '5';
             }
             break;
         case 'four':
             if (hasPreviousFactorial() === false) {
                 displayNumber = displayNumber + '4';
-                rawData = rawData + '4';
             }
             break;
         case 'three':
             if (hasPreviousFactorial() === false) {
                 displayNumber = displayNumber + '3';
-                rawData = rawData + '3';
             }
             break;
         case 'two':
             if (hasPreviousFactorial() === false) {
                 displayNumber = displayNumber + '2';
-                rawData = rawData + '2';
             }
             break;
         case 'one':
             if (hasPreviousFactorial() === false) {
                 displayNumber = displayNumber + '1';
-                rawData = rawData + '1';
             }
             break;
         case 'period':
-            if (hasPreviousFactorial() === false && hasPreviousPeriod() === false) {
+            if (displayNumber.length == 0 && hasPreviousFactorial() === false) {
+                displayNumber = displayNumber + '0.';
+            } else if (hasPreviousFactorial() === false && hasPreviousPeriod() === false && hasExponent() === false) {
                 displayNumber = displayNumber + '.';
-                rawData = rawData + '.';
+            } else {
+                warning.textContent = "To use a decimal point, you can not have another decimal point, factorial, or exponent";
             }
             break;
         case 'clear':
@@ -105,23 +110,22 @@ function collectData() {
             }
             break;
         case 'pos-neg':
-            // console.log('positive negative switch');
             switchPositiveNegative();
             break;
         case 'factorial':
-            if (hasPreviousNumber() === true) {
-                rawData = rawData + '!';
+            if (hasPreviousNumber() === true && hasPreviousPeriod() === false) {
                 displayNumber = displayNumber + '!';
+                addDisplayToRaw();
+                displayNumber = '';
             } else {
-                alert('You must select a number before using a factorial "!"')
+                warning.textContent = `You must use a whole number before using a factorial '!'`;
             }
             break;
         case 'exponent':
-            if (hasPreviousNumber() === true) {
-                rawData = rawData + '^';
+            if (hasPreviousNumber() === true && hasPreviousPeriod() === false) {
                 displayNumber = displayNumber + '^';
             } else {
-                alert('You must select the first number "x" before using the exponent for the number "y"')
+                warning.textContent = `A whole number 'x' must be selected before using the exponent for a whole number 'y'`;
             }
             break;
         case 'backspace':
@@ -129,79 +133,104 @@ function collectData() {
             break;
         case 'plus':
             if (isDoubleOperator() === false) {
+                addDisplayToRaw();
                 rawData = rawData + ' + ';
                 displayNumber = '';
             } else {
+                warning.textContent = `You must have a number before choosing '+'`
                 alert('You must have a number before choosing "+" ')
             }
             break;
         case 'minus':
             if (isDoubleOperator() === false) {
+                addDisplayToRaw();
                 rawData = rawData + ' - ';
                 displayNumber = '';
             } else {
-                alert('You must have a number before choosing "-" ')
+                warning.textContent = `You must have a number before choosing '-'`
             }
             break;
         case 'times':
             if (isDoubleOperator() === false) {
+                addDisplayToRaw();
                 rawData = rawData + ' * ';
                 displayNumber = '';
             } else {
-                alert('You must have a number before choosing "*" ')
+                warning.textContent = `You must have a number before choosing '*'`
             }
             break;
         case 'divide':
             if (isDoubleOperator() === false) {
+                addDisplayToRaw();
                 rawData = rawData + ' / ';
                 displayNumber = '';
             } else {
-                alert('You must have a number before choosing "/" ')
+                warning.textContent = `You must have a number before choosing '/'`
             }
             break;
         case 'equals':
+            addDisplayToRaw();
+            displayNumber = '';
             calculateData();
             break;
         default:
             console.log('default for collectNumbers');
             break;
-        }
+    }
     display.textContent = displayNumber;
     rawDisplay.textContent = rawData;
-    // console.log(rawData);        
 }
 
-// Check to see if user clicks two math operators back to back (for example: + - )
+// Check to see if user clicks two math operators back to back
 // Exception: factorial (!) and period (.)
 function isDoubleOperator() {
-    if (rawData.charAt(rawData.length - 1).match(/[\d!\.]/)) {
+    if (displayNumber.length != 0 || (rawData.charAt(rawData.length - 1).match(/[\d!\.]/))) {
         return false;
     } else {
-        // alert('Please enter a number. You can not choose two math operators')
+        return true;
     }
 }
 
 // Check to see if a user clicks on a number immediately after choosing factorial (for example: 3!4)
 function hasPreviousFactorial() {
-    if (rawData.charAt(rawData.length - 1).match(/!/)) {
-        // alert('Please enter a math operator after using the factorial operator');
+    if (rawData.charAt(rawData.length - 1).match(/!/) && displayNumber.length == 0) {
+        if (warning.textContent.length == 0) {
+            warning.textContent = 'Please use a math operator after using a factorial'
+        }
         return true;
     } else {
         return false;
+    }
+}
+
+// Check to see if a user is trying to divide by 0 (for example: 32 / 0)
+function hasDivision() {
+    if (rawData.charAt(rawData.length - 1).match(/\//)) {
+        return false;
+    } else {
+        return true;
     }
 }
 
 // Check to see if user clicked on period twice in the same number (for example: 3.14.159)
 function hasPreviousPeriod() {
     if (displayNumber.match(/\./)) {
-        // alert('You can not enter more then 1 decimal point in a number');
         return true;
     } else {
         return false;
     }
 }
 
-// Check to see if there is a number preceding for factorial and exponent (maybe period and +/-)
+// Check for an exponent in number, before adding a decimal point.
+function hasExponent() {
+    if (displayNumber.match(/\^/)) {
+        return true;
+    } else {
+        return false;
+    }
+}
+
+// Check to see if there is a number preceding for factorial and exponent
 function hasPreviousNumber() {
     if (displayNumber.charAt(displayNumber.length - 1).match(/\d/)) {
         return true;
@@ -210,68 +239,145 @@ function hasPreviousNumber() {
     }
 }
 
-// If the last item was a number - remove the last item of displayNumber and rawData
-// If the last itme was an operator - remove the last item & spaces of rawData only
+// Backspace 1 space in Display Number, or 1-2 in Raw Data
 function backspaceNumberOrOperator() {
-    if (rawData.charAt(rawData.length - 1).match(/[\d!\.]/)) {
+    // If there is a display number, delete from it first
+    if (displayNumber.length >= 1) {
         let displayArray = displayNumber.split('');
         displayArray.pop();
         let displayString = displayArray.join('');
         displayNumber = displayString;
-        let rawDataArray = rawData.split('');
-        rawDataArray.pop();
-        let rawDataString = rawDataArray.join('');
-        rawData = rawDataString;
     } else {
-        let rawDataArray = rawData.split(' ');
-        rawDataArray.pop();
-        rawDataArray.pop();
-        let rawDataString = rawDataArray.join(' ');
+        let rawDataArray = rawData.split('');
+        // If the array has an empty string at the end (for example, from ' + ')
+        if (rawDataArray.length >= 1 && rawDataArray[rawDataArray.length-1].match(/\s/)) {
+            rawDataArray.pop();
+            rawDataArray.pop();
+        } else {
+            rawDataArray.pop();
+        }
+        let rawDataString = rawDataArray.join('');
         rawData = rawDataString;
     }
 }
 
-// If there is no display number, add '-' to display & raw
-// If there is a positive display number, add '-' to display & raw
-// If there is a negative display number, remove '-' from display & raw
+// Add or remove negative sign from display number
 function switchPositiveNegative() {
-    // console.log(displayNumber.length);
+    // If there is not a display number, it will start with '-'
     if (displayNumber.length == 0) {
-        // console.log('display is empty');
-        rawData = rawData + '-';
         displayNumber = '-';
     } else {
-        console.log('If statement(s) did not reqister');
         let displayArray = displayNumber.split('');
-        console.log(displayArray);
+        // If the display number is already negative, delete the '-'
         if (displayArray[0].match(/-/)) {
-            console.log('Display is negative');
             displayArray.shift();
             let displayString = displayArray.join('');
             displayNumber = displayString;
         } else {
-            console.log('display was positive switched to negative');
+            // If the dislay number is positive, add a "-" to the begining of the array
             displayArray.unshift('-');
             let displayString = displayArray.join('');
             displayNumber = displayString;
-            console.log('Need to alter rawData')
-            let rawDataArray = rawData.split(' ');
-            console.log(rawDataArray);
         }
-        // displayArray.pop();
-        
-        
-        // let rawDataArray = rawData.split('');
-        // rawDataArray.pop();
-        // let rawDataString = rawDataArray.join('');
-        // rawData = rawDataString;
     }
 }
 
-function calculateData() {
-    // Need to define the order of operations.
-    console.log(`calculateData ran ${rawData}`)
+// Add displayNumber to the end of rawData string
+function addDisplayToRaw() {
+    rawData = rawData + displayNumber;
 }
+
+function calculateData() {
+    // Create Sample rawData - DELETE AFTER
+    rawData = '1 + 10! - 12^2 * 3 / 0.5 + -4! * 3^2 -3.75 / 2 - 7';
+    console.log(`calculateData running ${rawData}`)
+    // Find how many math symbols there are to complete
+    let operatorMatch = rawData.match(/[^0-9\s\.]/g);
+    console.log(operatorMatch.length);
+    // Need to define the order of operations.
+    // Need If statement - if there are symbols do the loop.
+    for (i = 1; i <= operatorMatch.length; i++) {
+        // First order of operation is FACTORIAL
+        if (rawData.match(/\d+!/)) {
+            let factorialMatch = rawData.match(/\d+!/)[0];
+            // Remove the '!' before running factorial function
+            let factorialArray = factorialMatch.split('');
+            factorialArray.pop();
+            factorialNumber = factorialArray.join('');
+            let factorialResult = factorial(factorialNumber);
+            // Replace the rawData with the factorialResult
+            let factoralRawData = /\d+!/[Symbol.replace](rawData, factorialResult);
+            rawData = factoralRawData;
+            console.log(rawData);
+        // Second order of operation is EXPONENTS
+        } else if (rawData.match(/\d+\^\d+/)) {
+            // console.log('exponent function needs to happen')
+            let exponentMatch = rawData.match(/\d+\^\d+/)[0];
+            // console.log(exponentMatch);
+            // Find the whole and exponent to run exponent function
+            let wholeNumber = exponentMatch.match(/^\d+/)[0];
+            let exponentNumber = exponentMatch.match(/\d$/)[0];
+            // console.log(wholeNumber);
+            // console.log(exponentNumber);
+            let exponentResult = exponent(wholeNumber, exponentNumber);
+            // replace rawData with the exponentResult
+            let exponentRawData = /\d+\^\d+/[Symbol.replace](rawData, exponentResult);
+            rawData = exponentRawData;
+            console.log(rawData);
+        // Next Order of operation is MULTIPLICATION OR DIVISION (left to right)
+        } else if (rawData.match(/\*|\//)) {
+            let multiplicationDivisionRegExp = /(\-?)[\d]+(\.?)[\d]*[\s][\*|\/][\s](\-?)[\d]+(\.?)[\d]*/;
+            let multiplicationDivisionMatch = rawData.match(multiplicationDivisionRegExp)[0];
+            let isMultiplicationOrDivision = multiplicationDivisionMatch.match(/\*|\//)[0];
+            // Find the two numbers to run multiplication or division function
+            let numberRegExp = /(\-?)[\d]+(\.?)[\d]*/g;
+            let firstNumber = multiplicationDivisionMatch.match(numberRegExp)[0];
+            let secondNumber = multiplicationDivisionMatch.match(numberRegExp)[1];
+            if (isMultiplicationOrDivision == '*') {
+                let multiplicationResult = multiply(firstNumber, secondNumber);
+                // Replace rawData with multiplicationResult
+                let multiplicationRawData = multiplicationDivisionRegExp[Symbol.replace](rawData, multiplicationResult);
+                rawData = multiplicationRawData;
+                console.log(rawData);
+            } else {
+                let divisionResult = divide(firstNumber, secondNumber);
+                // Replace rawData with divisionResult
+                let divisionRawData = multiplicationDivisionRegExp[Symbol.replace](rawData, divisionResult);
+                rawData = divisionRawData;
+                console.log(rawData);
+            }
+        } else if (rawData.match(/\+|-/)) {
+            console.log('The only stuff left is + and -')
+            // Need to go from left to right finding all of the + or - symbols
+            const additionSubtractionRegExp = /(\-?)[\d]+(\.?)[\d]*[\s][\+|-][\s](\-?)[\d]+(\.?)[\d]*/;
+            let additionSubtractionMatch = rawData.match(additionSubtractionRegExp)[0];
+            let isAdditionOrSubtraction = additionSubtractionMatch.match(/\+|-/)[0];
+            console.log(additionSubtractionMatch);
+            console.log(isAdditionOrSubtraction);
+            let numberRegExp = /(\-?)[\d]+(\.?)[\d]*/g;
+            let firstNumber = Number(additionSubtractionMatch.match(numberRegExp)[0]);
+            let secondNumber = Number(additionSubtractionMatch.match(numberRegExp)[1]);
+            console.log(firstNumber);
+            console.log(secondNumber);
+            if (isAdditionOrSubtraction == '+') {
+                let additionResult = add(firstNumber, secondNumber);
+                let additionRawData = additionSubtractionRegExp[Symbol.replace](rawData, additionResult);
+                rawData = additionRawData;
+                console.log(rawData);
+            } else {
+                console.log('it is subtraction');
+                let subtractionResult = subtract(firstNumber, secondNumber);
+                let subtractionsRawData = additionSubtractionRegExp[Symbol.replace](rawData, subtractionResult);
+                rawData = subtractionsRawData;
+                console.log(rawData);
+            }
+        } else {
+            break;
+        }
+    }
+}
+// [^ ]    - Matches Characters NOT in brackets
+// let noTimesData = timesRegExp[Symbol.replace](rawData, timesResult)
 
 calcButtons.forEach(calcButton => calcButton.addEventListener('click', collectData))
 
@@ -347,11 +453,12 @@ function calcDataTest() {
 
 calcDataTest();
 
-// TO DO:
-// Set-Up plus-minus button function - alter when display data goes to rawData
-// Put a 'x' on ! button
-// Check to see if there is a number preceding the period. Will need to add an 0.
+// TO DO: 
+// Need to put regex for each math operation in variable, so change is only in 1 place
+// Check out decimal points to be found in all kinds of numbers (discoverd during mult/div)
+// Disable negative exponent?
+// Research negative factorial - Think I can leave it, as negative symbol stays put
 // Set-Up the Equal button
 // Store the Result of the equal button to use again.
 // Round large numbers / decimals points
-// Add keyboard input
+// Add keyboard

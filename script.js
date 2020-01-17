@@ -170,6 +170,7 @@ function collectData() {
             addDisplayToRaw();
             displayNumber = '';
             calculateData();
+            displayNumber = rawData;
             break;
         default:
             console.log('default for collectNumbers');
@@ -285,7 +286,111 @@ function addDisplayToRaw() {
     rawData = rawData + displayNumber;
 }
 
+// rawData = '1 + 10! - 12^2 * 3 / 0.5 + -4! * 3^2 + -3.75 / 2 - 7';
 function calculateData() {
+    console.log(rawData)
+    // Find how many math symbols there are to complete
+    // let operatorMatch = rawData.match(/[^0-9\s\.]/g);
+    // console.log(operatorMatch.length);
+    if (rawData.match(/\d+!/)) {
+        solveFactorial();
+    } else if (rawData.match(/\d+\^\d+/)) {
+        solveExponent();
+    } else if (rawData.match(/\*|\//)) {
+        solveMultiplicationOrDivison();
+    } else if ((rawData.match(/[\s][\+|-][\s]/))) {
+        solveAdditionOrSubtraction();
+    } else {
+        console.log('we have the final result')
+        console.log(rawData);
+        return rawData;
+    }
+}
+
+function solveFactorial() {
+    let factorialMatch = rawData.match(/\d+!/)[0];
+    // Remove the '!' before running factorial function
+    let factorialArray = factorialMatch.split('');
+    factorialArray.pop();
+    factorialNumber = factorialArray.join('');
+    let factorialResult = factorial(factorialNumber);
+    // Replace the rawData with the factorialResult
+    let factoralRawData = /\d+!/[Symbol.replace](rawData, factorialResult);
+    rawData = factoralRawData;
+    // console.log(rawData);
+    calculateData();
+}
+
+function solveExponent() {
+    let exponentMatch = rawData.match(/\d+\^\d+/)[0];
+    // console.log(exponentMatch);
+    // Find the whole and exponent to run exponent function
+    let wholeNumber = exponentMatch.match(/^\d+/)[0];
+    let exponentNumber = exponentMatch.match(/\d$/)[0];
+    // console.log(wholeNumber);
+    // console.log(exponentNumber);
+    let exponentResult = exponent(wholeNumber, exponentNumber);
+    // replace rawData with the exponentResult
+    let exponentRawData = /\d+\^\d+/[Symbol.replace](rawData, exponentResult);
+    rawData = exponentRawData;
+    // console.log(rawData);
+    calculateData();
+}
+
+function solveMultiplicationOrDivison() {
+    let multiplicationDivisionRegExp = /(\-?)[\d]+(\.?)[\d]*[\s][\*|\/][\s](\-?)[\d]+(\.?)[\d]*/;
+    let multiplicationDivisionMatch = rawData.match(multiplicationDivisionRegExp)[0];
+    let isMultiplicationOrDivision = multiplicationDivisionMatch.match(/\*|\//)[0];
+    // Find the two numbers to run multiplication or division function
+    let numberRegExp = /(\-?)[\d]+(\.?)[\d]*/g;
+    let firstNumber = multiplicationDivisionMatch.match(numberRegExp)[0];
+    let secondNumber = multiplicationDivisionMatch.match(numberRegExp)[1];
+    if (isMultiplicationOrDivision == '*') {
+        let multiplicationResult = multiply(firstNumber, secondNumber);
+        // Replace rawData with multiplicationResult
+        let multiplicationRawData = multiplicationDivisionRegExp[Symbol.replace](rawData, multiplicationResult);
+        rawData = multiplicationRawData;
+        // console.log(rawData);
+    } else {
+        let divisionResult = divide(firstNumber, secondNumber);
+        // Replace rawData with divisionResult
+        let divisionRawData = multiplicationDivisionRegExp[Symbol.replace](rawData, divisionResult);
+        rawData = divisionRawData;
+        // console.log(rawData);
+    }
+    calculateData();
+}
+
+function solveAdditionOrSubtraction() {
+    // console.log('The only stuff left is + and -')
+    // Need to go from left to right finding all of the + or - symbols
+    const additionSubtractionRegExp = /(\-?)[\d]+(\.?)[\d]*[\s][\+|-][\s](\-?)[\d]+(\.?)[\d]*/;
+    let additionSubtractionMatch = rawData.match(additionSubtractionRegExp)[0];
+    let isAdditionOrSubtraction = additionSubtractionMatch.match(/[\s][\+|-][\s]/)[0];
+    // console.log(additionSubtractionMatch);
+    // console.log(isAdditionOrSubtraction);
+    let numberRegExp = /(\-?)[\d]+(\.?)[\d]*/g;
+    let firstNumber = Number(additionSubtractionMatch.match(numberRegExp)[0]);
+    let secondNumber = Number(additionSubtractionMatch.match(numberRegExp)[1]);
+    // console.log(firstNumber);
+    // console.log(secondNumber);
+    if (isAdditionOrSubtraction == ' + ') {
+        let additionResult = add(firstNumber, secondNumber);
+        let additionRawData = additionSubtractionRegExp[Symbol.replace](rawData, additionResult);
+        rawData = additionRawData;
+        // console.log(rawData);
+    } else {
+        // console.log('it is subtraction');
+        let subtractionResult = subtract(firstNumber, secondNumber);
+        let subtractionsRawData = additionSubtractionRegExp[Symbol.replace](rawData, subtractionResult);
+        rawData = subtractionsRawData;
+        // console.log(rawData);
+    }
+    calculateData()
+}
+
+
+function calculateDataORIGINAL() {
     // Create Sample rawData - DELETE AFTER
     rawData = '1 + 10! - 12^2 * 3 / 0.5 + -4! * 3^2 -3.75 / 2 - 7';
     console.log(`calculateData running ${rawData}`)
@@ -293,6 +398,7 @@ function calculateData() {
     let operatorMatch = rawData.match(/[^0-9\s\.]/g);
     console.log(operatorMatch.length);
     // Need to define the order of operations.
+    // Need If statement - if there are symbols do the loop.
     for (i = 1; i <= operatorMatch.length; i++) {
         // First order of operation is FACTORIAL
         if (rawData.match(/\d+!/)) {
@@ -343,7 +449,7 @@ function calculateData() {
                 rawData = divisionRawData;
                 console.log(rawData);
             }
-        } else {
+        } else if (rawData.match(/\+|-/)) {
             console.log('The only stuff left is + and -')
             // Need to go from left to right finding all of the + or - symbols
             const additionSubtractionRegExp = /(\-?)[\d]+(\.?)[\d]*[\s][\+|-][\s](\-?)[\d]+(\.?)[\d]*/;
@@ -368,6 +474,8 @@ function calculateData() {
                 rawData = subtractionsRawData;
                 console.log(rawData);
             }
+        } else {
+            break;
         }
     }
 }
@@ -449,11 +557,11 @@ function calcDataTest() {
 calcDataTest();
 
 // TO DO: 
+// 9^8 + 50 - got an error message on the 0
 // Need to put regex for each math operation in variable, so change is only in 1 place
+// Store the Result of the equal button to use again.
 // Check out decimal points to be found in all kinds of numbers (discoverd during mult/div)
 // Disable negative exponent?
 // Research negative factorial - Think I can leave it, as negative symbol stays put
-// Set-Up the Equal button
-// Store the Result of the equal button to use again.
 // Round large numbers / decimals points
 // Add keyboard
