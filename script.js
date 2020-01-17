@@ -22,6 +22,15 @@ function divide(a, b) {
     result = a / b;
 }
 
+function factorial(a) {
+	if (a == 0) return 1;
+	let product = 1;
+	for (let i = a; i > 0; i--) {
+	  product *= i;
+	}
+	return product;
+}
+
 function collectData() {    
     // console.log(this.id);
     warning.textContent = '';   
@@ -273,9 +282,33 @@ function addDisplayToRaw() {
 }
 
 function calculateData() {
+    // Create Sample rawData - DELETE AFTER
+    rawData = '1 + 10! - 2^2 * -3 / 0.5 + 4! * 3^2 -3.75 / 2 - 7';
+    console.log(`calculateData running ${rawData}`)
+    // Find how many math symbols there are to complete
+    let operatorMatch = rawData.match(/[^0-9\s\.]/g);
+    console.log(operatorMatch.length);
     // Need to define the order of operations.
-    console.log(`calculateData ran ${rawData}`)
+    for (i = 1; i <= operatorMatch.length; i++) {
+        // First order of operation is FACTORIAL
+        if (rawData.match(/\d!/)) {
+            let factorialMatch = rawData.match(/\d+!/);
+            // Remove the '!' before running function
+            let factorialArray = factorialMatch[0].split('');
+            factorialArray.pop();
+            factorialNumber = factorialArray.join('');
+            let factorialResult = factorial(factorialNumber);
+            // Replace the rawData with the factorialResult
+            let factoralRawData = /\d+!/[Symbol.replace](rawData, factorialResult);
+            rawData = factoralRawData;
+            console.log(rawData);
+        } else {
+            console.log('continue looking for another symbol')
+        }
+    }
 }
+// [^ ]    - Matches Characters NOT in brackets
+// let noTimesData = timesRegExp[Symbol.replace](rawData, timesResult)
 
 calcButtons.forEach(calcButton => calcButton.addEventListener('click', collectData))
 
@@ -352,6 +385,7 @@ function calcDataTest() {
 calcDataTest();
 
 // TO DO: 
+// Disable negative exponent?
 // Set-Up the Equal button
 // Store the Result of the equal button to use again.
 // Round large numbers / decimals points
