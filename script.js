@@ -293,9 +293,6 @@ function addDisplayToRaw() {
 function calculateData() {
     // console.log(rawData)
     originalRawData = '1 + 2 + 3 + 4'
-    // Find how many math symbols there are to complete
-    // let operatorMatch = rawData.match(/[^0-9\s\.]/g);
-    // console.log(operatorMatch.length);
     if (rawData.match(/\d+!/)) {
         solveFactorial();
     } else if (rawData.match(/\d+\^\d+/)) {
@@ -307,7 +304,6 @@ function calculateData() {
     } else {
         return rawData;
     }
-    // console.log(originalRawData);
 }
 
 function solveFactorial() {
@@ -325,18 +321,15 @@ function solveFactorial() {
 }
 
 function solveExponent() {
-    let exponentMatch = rawData.match(/\d+\^\d+/)[0];
-    // console.log(exponentMatch);
+    let exponentRegExp = /\d+\^\d+/;
+    let exponentMatch = rawData.match(exponentRegExp)[0];
     // Find the whole and exponent to run exponent function
     let wholeNumber = exponentMatch.match(/^\d+/)[0];
-    let exponentNumber = exponentMatch.match(/\d$/)[0];
-    // console.log(wholeNumber);
-    // console.log(exponentNumber);
+    let exponentNumber = exponentMatch.match(/\d+$/)[0];
     let exponentResult = exponent(wholeNumber, exponentNumber);
     // replace rawData with the exponentResult
-    let exponentRawData = /\d+\^\d+/[Symbol.replace](rawData, exponentResult);
+    let exponentRawData = exponentRegExp[Symbol.replace](rawData, exponentResult);
     rawData = exponentRawData;
-    // console.log(rawData);
     calculateData();
 }
 
@@ -353,41 +346,31 @@ function solveMultiplicationOrDivison() {
         // Replace rawData with multiplicationResult
         let multiplicationRawData = multiplicationDivisionRegExp[Symbol.replace](rawData, multiplicationResult);
         rawData = multiplicationRawData;
-        // console.log(rawData);
     } else {
         let divisionResult = divide(firstNumber, secondNumber);
         // Replace rawData with divisionResult
         let divisionRawData = multiplicationDivisionRegExp[Symbol.replace](rawData, divisionResult);
         rawData = divisionRawData;
-        // console.log(rawData);
     }
     calculateData();
 }
 
 function solveAdditionOrSubtraction() {
-    // console.log('The only stuff left is + and -')
     // Need to go from left to right finding all of the + or - symbols
     const additionSubtractionRegExp = /(\-?)[\d]+(\.?)[\d]*[\s][\+|-][\s](\-?)[\d]+(\.?)[\d]*/;
     let additionSubtractionMatch = rawData.match(additionSubtractionRegExp)[0];
     let isAdditionOrSubtraction = additionSubtractionMatch.match(/[\s][\+|-][\s]/)[0];
-    // console.log(additionSubtractionMatch);
-    // console.log(isAdditionOrSubtraction);
     let numberRegExp = /(\-?)[\d]+(\.?)[\d]*/g;
     let firstNumber = Number(additionSubtractionMatch.match(numberRegExp)[0]);
     let secondNumber = Number(additionSubtractionMatch.match(numberRegExp)[1]);
-    // console.log(firstNumber);
-    // console.log(secondNumber);
     if (isAdditionOrSubtraction == ' + ') {
         let additionResult = add(firstNumber, secondNumber);
         let additionRawData = additionSubtractionRegExp[Symbol.replace](rawData, additionResult);
         rawData = additionRawData;
-        // console.log(rawData);
     } else {
-        // console.log('it is subtraction');
         let subtractionResult = subtract(firstNumber, secondNumber);
         let subtractionsRawData = additionSubtractionRegExp[Symbol.replace](rawData, subtractionResult);
         rawData = subtractionsRawData;
-        // console.log(rawData);
     }
     calculateData()
 }
@@ -408,8 +391,8 @@ function displayRawData() {
 calcButtons.forEach(calcButton => calcButton.addEventListener('click', collectData))
 
 // TO DO: 
+// 5*4 = 20 -2 = 2018 (2020-2)
 // 9^8 + 50 - got an error message on the 0
-// Need to put regex for each math operation in variable, so change is only in 1 place
 // Store the Result of the equal button to use again.
 // Check out decimal points to be found in all kinds of numbers (discoverd during mult/div)
 // Disable negative exponent?
