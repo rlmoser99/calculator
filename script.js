@@ -342,7 +342,6 @@ function calcDataTest() {
 calcDataTest();
 
 // TO DO: 
-// Check to see if there is a number preceding the period. Will need to add an 0.
 // Set-Up the Equal button
 // Store the Result of the equal button to use again.
 // Round large numbers / decimals points

@@ -61,14 +61,28 @@ body {
     font-size: 1.75rem;
 }
 
+.operator:focus,
+.operator:hover {
+    font-size: 2.1rem;
+    color: white;
+}
+
+.operator:focus img,
+.operator:hover img {
+    height: 35px;
+}
+
 #backspace {
     grid-column: 4 / 5;
     grid-row: 1 / 3;
 }
+#backspace:focus img, 
+#backspace:hover img {
+    height: 45px;
+}
 
 .equal {
     background-color: #00b1c5;
-    /* color:#273043; */
 }
 
 button img {
@@ -88,4 +102,12 @@ button sup {
 
 #factorial, #exponent {
     letter-spacing: .1em;
+}
+
+button:focus,
+button:hover {
+    border: 1px solid #313c54;
+    font-size: 2.5rem;
+    color: #00cfe6;
+    outline: none;
 }
