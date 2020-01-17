@@ -207,32 +207,28 @@ function hasPreviousNumber() {
 // If the last item was a number - remove the last item of displayNumber and rawData
 // If the last itme was an operator - remove the last item & spaces of rawData only
 function backspaceNumberOrOperator() {
-    let displayArray = displayNumber.split('');
-    displayArray.pop();
-    let displayString = displayArray.join('');
-    displayNumber = displayString;
-    if (displayNumber.length == 0) {
-        console.log('there is no display, only raw to work with');
-        let rawDataArray = rawData.split(' ');
+    if (displayNumber.length >= 1) {
+        // If there is a display number, delete from it first
+        let displayArray = displayNumber.split('');
+        displayArray.pop();
+        let displayString = displayArray.join('');
+        displayNumber = displayString;
+        // If display is empty, delete from the rawData
+    } else if (displayNumber.length == 0) {
+        let rawDataArray = rawData.split('');
         console.log(rawDataArray)
-        // rawDataArray.pop();
-        // console.log(rawDataArray)
-        // rawDataArray.pop();
-        // let rawDataString = rawDataArray.join(' ');
-        // rawData = rawDataString;
+        // If the array has an empty string at the end (for example, from ' + ')
+        if (rawDataArray.length >= 1 && rawDataArray[rawDataArray.length-1].match(/\s/)) {
+            rawDataArray.pop();
+            rawDataArray.pop();
+        } else {
+            rawDataArray.pop();
+        }
+        let rawDataString = rawDataArray.join('');
+        rawData = rawDataString;
+    } else {
+        return;
     }
-    // if (rawData.charAt(rawData.length - 1).match(/[\d!\.]/)) {   
-    //     let rawDataArray = rawData.split('');
-    //     rawDataArray.pop();
-    //     let rawDataString = rawDataArray.join('');
-    //     rawData = rawDataString;
-    // } else {
-        // let rawDataArray = rawData.split(' ');
-        // rawDataArray.pop();
-        // rawDataArray.pop();
-        // let rawDataString = rawDataArray.join(' ');
-        // rawData = rawDataString;
-    // }
 }
 
 // If there is no display number, add '-' to display & raw
@@ -359,7 +355,6 @@ calcDataTest();
 // TO DO:
 // Set-Up plus-minus button function - alter when display data goes to rawData
 // Check factorial for whole number.
-// Check to see if re-factor broke backspace
 // 2!+ is broken
 // Put a 'x' on ! button
 // Check to see if there is a number preceding the period. Will need to add an 0.
@@ -367,4 +362,3 @@ calcDataTest();
 // Store the Result of the equal button to use again.
 // Round large numbers / decimals points
 // Add keyboard
-// asdfasd
