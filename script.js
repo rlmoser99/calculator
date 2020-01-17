@@ -80,7 +80,9 @@ function collectData() {
             }
             break;
         case 'period':
-            if (hasPreviousFactorial() === false && hasPreviousPeriod() === false && hasExponent() === false) {
+            if (displayNumber.length == 0 && hasPreviousFactorial() === false) {
+                displayNumber = displayNumber + '0.';
+            } else if (hasPreviousFactorial() === false && hasPreviousPeriod() === false && hasExponent() === false) {
                 displayNumber = displayNumber + '.';
             } else {
                 alert('To use a decimal point, you can not have another decimal point, factorial, or exponent')
@@ -176,7 +178,7 @@ function isDoubleOperator() {
 
 // Check to see if a user clicks on a number immediately after choosing factorial (for example: 3!4)
 function hasPreviousFactorial() {
-    if (rawData.charAt(rawData.length - 1).match(/!/)) {
+    if (rawData.charAt(rawData.length - 1).match(/!/) && displayNumber.length == 0) {
         alert('Please enter a math operator after using the factorial operator');
         return true;
     } else {
@@ -339,7 +341,7 @@ function calcDataTest() {
 
 calcDataTest();
 
-// TO DO:
+// TO DO: 
 // Check to see if there is a number preceding the period. Will need to add an 0.
 // Set-Up the Equal button
 // Store the Result of the equal button to use again.
