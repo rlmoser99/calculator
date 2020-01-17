@@ -204,19 +204,16 @@ function hasPreviousNumber() {
     }
 }
 
-// If the last item was a number - remove the last item of displayNumber and rawData
-// If the last itme was an operator - remove the last item & spaces of rawData only
+// Backspace 1 space in Display Number, or 1-2 in Raw Data
 function backspaceNumberOrOperator() {
+    // If there is a display number, delete from it first
     if (displayNumber.length >= 1) {
-        // If there is a display number, delete from it first
         let displayArray = displayNumber.split('');
         displayArray.pop();
         let displayString = displayArray.join('');
         displayNumber = displayString;
-        // If display is empty, delete from the rawData
-    } else if (displayNumber.length == 0) {
+    } else {
         let rawDataArray = rawData.split('');
-        console.log(rawDataArray)
         // If the array has an empty string at the end (for example, from ' + ')
         if (rawDataArray.length >= 1 && rawDataArray[rawDataArray.length-1].match(/\s/)) {
             rawDataArray.pop();
@@ -226,45 +223,27 @@ function backspaceNumberOrOperator() {
         }
         let rawDataString = rawDataArray.join('');
         rawData = rawDataString;
-    } else {
-        return;
     }
 }
 
-// If there is no display number, add '-' to display & raw
-// If there is a positive display number, add '-' to display & raw
-// If there is a negative display number, remove '-' from display & raw
+// Add or remove negative sign from display number
 function switchPositiveNegative() {
-    // console.log(displayNumber.length);
+    // If there is not a display number, it will start with '-'
     if (displayNumber.length == 0) {
-        // console.log('display is empty');
-        rawData = rawData + '-';
         displayNumber = '-';
     } else {
-        console.log('If statement(s) did not reqister');
         let displayArray = displayNumber.split('');
-        console.log(displayArray);
+        // If the display number is already negative, delete the '-'
         if (displayArray[0].match(/-/)) {
-            console.log('Display is negative');
             displayArray.shift();
             let displayString = displayArray.join('');
             displayNumber = displayString;
         } else {
-            console.log('display was positive switched to negative');
+            // If the dislay number is positive, add a "-" to the begining of the array
             displayArray.unshift('-');
             let displayString = displayArray.join('');
             displayNumber = displayString;
-            console.log('Need to alter rawData')
-            let rawDataArray = rawData.split(' ');
-            console.log(rawDataArray);
         }
-        // displayArray.pop();
-        
-        
-        // let rawDataArray = rawData.split('');
-        // rawDataArray.pop();
-        // let rawDataString = rawDataArray.join('');
-        // rawData = rawDataString;
     }
 }
 
