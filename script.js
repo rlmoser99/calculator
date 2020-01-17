@@ -31,6 +31,10 @@ function factorial(a) {
 	return product;
 }
 
+function exponent(a, b) {
+	return Math.pow(a, b);
+}
+
 function collectData() {    
     // console.log(this.id);
     warning.textContent = '';   
@@ -283,7 +287,7 @@ function addDisplayToRaw() {
 
 function calculateData() {
     // Create Sample rawData - DELETE AFTER
-    rawData = '1 + 10! - 2^2 * -3 / 0.5 + 4! * 3^2 -3.75 / 2 - 7';
+    rawData = '1 + 10! - 12^2 * -3 / 0.5 + 4! * 3^2 -3.75 / 2 - 7';
     console.log(`calculateData running ${rawData}`)
     // Find how many math symbols there are to complete
     let operatorMatch = rawData.match(/[^0-9\s\.]/g);
@@ -291,16 +295,30 @@ function calculateData() {
     // Need to define the order of operations.
     for (i = 1; i <= operatorMatch.length; i++) {
         // First order of operation is FACTORIAL
-        if (rawData.match(/\d!/)) {
-            let factorialMatch = rawData.match(/\d+!/);
-            // Remove the '!' before running function
-            let factorialArray = factorialMatch[0].split('');
+        if (rawData.match(/\d+!/)) {
+            let factorialMatch = rawData.match(/\d+!/)[0];
+            // Remove the '!' before running factorial function
+            let factorialArray = factorialMatch.split('');
             factorialArray.pop();
             factorialNumber = factorialArray.join('');
             let factorialResult = factorial(factorialNumber);
             // Replace the rawData with the factorialResult
             let factoralRawData = /\d+!/[Symbol.replace](rawData, factorialResult);
             rawData = factoralRawData;
+            console.log(rawData);
+        } else if (rawData.match(/\d+\^\d+/)) {
+            console.log('exponent function needs to happen')
+            let exponentMatch = rawData.match(/\d+\^\d+/)[0];
+            // console.log(exponentMatch);
+            // Find the whole and exponent to run exponent function
+            let wholeNumber = exponentMatch.match(/^\d+/)[0];
+            let exponentNumber = exponentMatch.match(/\d$/)[0];
+            // console.log(wholeNumber);
+            // console.log(exponentNumber);
+            let exponentResult = exponent(wholeNumber, exponentNumber);
+            // replace rawData with the exponentResult
+            let exponentRawData = /\d+\^\d+/[Symbol.replace](rawData, exponentResult);
+            rawData = exponentRawData;
             console.log(rawData);
         } else {
             console.log('continue looking for another symbol')
