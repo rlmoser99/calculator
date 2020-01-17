@@ -19,12 +19,7 @@ function multiply(a, b) {
 }
 
 function divide(a, b) {
-    if (b === 0) {
-        alert("Can not divide by 0");
-        display.textContent = '';
-    } else {
-        result = a / b;
-    }
+    result = a / b;
 }
 
 function collectData() {    
@@ -32,8 +27,10 @@ function collectData() {
     warning.textContent = '';   
     switch(this.id) {
         case 'zero':
-            if (hasPreviousFactorial() === false) {
+            if (hasPreviousFactorial() === false && hasDivision() === false ) {
                 displayNumber = displayNumber + '0';
+            } else {
+                warning.textContent = `You can not enter '0' directly after a division or factorial sign`;
             }
             break;
         case 'nine':
@@ -188,6 +185,15 @@ function hasPreviousFactorial() {
         return true;
     } else {
         return false;
+    }
+}
+
+// Check to see if a user is trying to divide by 0 (for example: 32 / 0)
+function hasDivision() {
+    if (rawData.charAt(rawData.length - 1).match(/\//)) {
+        return false;
+    } else {
+        return true;
     }
 }
 
@@ -346,7 +352,6 @@ function calcDataTest() {
 calcDataTest();
 
 // TO DO: 
-// Prevent / 0 - check the rawData
 // Set-Up the Equal button
 // Store the Result of the equal button to use again.
 // Round large numbers / decimals points
