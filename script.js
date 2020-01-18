@@ -5,6 +5,7 @@ const warning = document.querySelector('.warning')
 let displayNumber = '';
 let rawData = '';
 let rawDataFinalDisplay = '';
+let calculatedAnswer = '';
 // let result = '';
 
 
@@ -42,53 +43,63 @@ function collectData() {
     warning.textContent = '';   
     switch(this.id) {
         case 'zero':
-            if (hasPreviousFactorial() === false && hasDivision() === false ) {
+            hasPreviousCalculation ()
+            if (hasPreviousFactorial() === false && hasDivision() === false) {
                 displayNumber = displayNumber + '0';
             } else {
                 warning.textContent = `You can not enter '0' directly after a division or factorial sign`;
             }
             break;
         case 'nine':
+            hasPreviousCalculation();
             if (hasPreviousFactorial() === false) {
                 displayNumber = displayNumber + '9';
             }
             break;
         case 'eight':
+            hasPreviousCalculation();
             if (hasPreviousFactorial() === false) {
                 displayNumber = displayNumber + '8';
             }
             break;
         case 'seven':
+            hasPreviousCalculation();
             if (hasPreviousFactorial() === false) {
                 displayNumber = displayNumber + '7';
             }
             break;
         case 'six':
+            hasPreviousCalculation();
             if (hasPreviousFactorial() === false) {
                 displayNumber = displayNumber + '6';
             }
             break;
         case 'five':
+            hasPreviousCalculation();
             if (hasPreviousFactorial() === false) {
                 displayNumber = displayNumber + '5';
             }
             break;
         case 'four':
+            hasPreviousCalculation();
             if (hasPreviousFactorial() === false) {
                 displayNumber = displayNumber + '4';
             }
             break;
         case 'three':
+            hasPreviousCalculation();
             if (hasPreviousFactorial() === false) {
                 displayNumber = displayNumber + '3';
             }
             break;
         case 'two':
+            hasPreviousCalculation();
             if (hasPreviousFactorial() === false) {
                 displayNumber = displayNumber + '2';
             }
             break;
         case 'one':
+            hasPreviousCalculation();
             if (hasPreviousFactorial() === false) {
                 displayNumber = displayNumber + '1';
             }
@@ -173,15 +184,29 @@ function collectData() {
             takeRawForFinalResults()
             displayNumber = '';
             calculateData();
-            displayNumber = rawData;
+            // displayNumber = rawData;
             break;
         default:
             console.log('default for collectNumbers');
             break;
     }
-    display.textContent = displayNumber;
-    displayRawData();
+    displayWhichNumber();
+    // display.textContent = displayNumber;
+    displayRawData(event);
+    console.log(displayNumber);
+    console.log(rawData);
 }
+
+function displayWhichNumber() {
+    if (calculatedAnswer.length == 0) {
+        // console.log('displayWhichNumber will display number')
+        display.textContent = displayNumber;
+    } else {
+        display.textContent = calculatedAnswer;
+        // console.log('displayWhichNumber will display calculatedAnswer')
+    }
+}
+// calculatedAnswer = '' when user re-starts.
 
 // Check to see if user clicks two math operators back to back
 // Exception: factorial (!) and period (.)
@@ -292,7 +317,6 @@ function addDisplayToRaw() {
 // rawData = '1 + 10! - 12^2 * 3 / 0.5 + -4! * 3^2 + -3.75 / 2 - 7';
 function calculateData() {
     // console.log(rawData)
-    originalRawData = '1 + 2 + 3 + 4'
     if (rawData.match(/\d+!/)) {
         solveFactorial();
     } else if (rawData.match(/\d+\^\d+/)) {
@@ -302,7 +326,9 @@ function calculateData() {
     } else if ((rawData.match(/[\s][\+|-][\s]/))) {
         solveAdditionOrSubtraction();
     } else {
-        return rawData;
+        // return rawData;
+        displayNumber = rawData;
+        calculatedAnswer = rawData;
     }
 }
 
@@ -381,10 +407,28 @@ function takeRawForFinalResults() {
 }
 
 function displayRawData() {
+    // console.log(event.target.className);
     if (rawDataFinalDisplay.length == 0) {
         rawDisplay.textContent = rawData;
     } else {
         rawDisplay.textContent = rawDataFinalDisplay;
+    }
+}
+// Need to change rawDataFinalDisplay = '0' when user re-starts
+
+// Create a function "shouldButtonClearDisplay"
+// True: When Math operator button is pushed - move display to raw
+// True: After Equal Button has been pushed & answer is in display & NUMBER has been pushed
+// False: After Equal Button has been pushed & answer is in display & Operator has been pushed
+// False: When pushing a button in the normal flow - add to display
+
+// When a number has been pushed after the calculateData (equal sign) has ran. Clears calc.
+function hasPreviousCalculation () {
+    if (rawDataFinalDisplay.length != 0) {
+        displayNumber = '';
+        rawDataFinalDisplay = '';
+        calculatedAnswer = '';
+        rawData = '';
     }
 }
 
@@ -398,3 +442,4 @@ calcButtons.forEach(calcButton => calcButton.addEventListener('click', collectDa
 // Disable negative exponent?
 // Round large numbers / decimals points
 // Add keyboard
+// Look at creating function to add button text content to displayNumber, rather then hard-code it.
