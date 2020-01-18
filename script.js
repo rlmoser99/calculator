@@ -139,6 +139,7 @@ function collectData(e) {
             break;
         case 'exponent':
             if (hasPreviousNumber() === true && hasPreviousPeriod() === false) {
+                clearRawDataResult();
                 displayNumber = displayNumber + '^';
             } else {
                 warning.textContent = `A whole number 'x' must be selected before using the exponent for a whole number 'y'`;
@@ -345,12 +346,16 @@ function switchPositiveNegative() {
 // Add displayNumber to the end of rawData string
 function addDisplayToRaw() {
     if (rawDataResult.length == 0) {
-        // console.log('There is not calculated answer')
         rawData = rawData + displayNumber;
     } else {
         rawData = displayNumber;
         rawDataResult = '';
-        console.log('there was a calculated answer, now there is none')
+    }
+}
+
+function clearRawDataResult() {
+    if (rawDataResult.length != 0) {
+        rawDataResult = '';
     }
 }
 
@@ -467,7 +472,6 @@ function displayRawData() {
 calcButtons.forEach(calcButton => calcButton.addEventListener('click', collectData))
 
 // TO DO: 
-// 8 * 1 = 8 ^ 2 - reset the board, because it #2 resets board.
 // 8 + 7 * 54 * "equal" - got an error (should not be able to hit equal at this point)
 // Store the Result of the equal button to use again.
 // Check out decimal points to be found in all kinds of numbers (discoverd during mult/div)
