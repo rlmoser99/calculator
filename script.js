@@ -41,7 +41,7 @@ function collectData(e) {
     switch(this.id) {
         case 'zero':
             resetDisplayNumber();
-            if (hasPreviousFactorial() === false && hasDivision() === false) {
+            if (hasPreviousFactorial() === false && (hasDivision() === false) || hasPreviousNumber() === true) {
                 displayNumber = displayNumber + '0';
             } else {
                 warning.textContent = `You can not enter '0' directly after a division or factorial sign`;
@@ -221,7 +221,7 @@ function hasPreviousFactorial() {
 
 // Check to see if a user is trying to divide by 0 (for example: 32 / 0)
 function hasDivision() {
-    if (rawData.charAt(rawData.length - 2).match(/\//)) {
+    if (rawData.charAt(rawData.length - 2).match(/\//) || displayNumber.charAt(displayNumber.length - 1).match(/\d/)) {
         return true;
     } else {
         return false;
@@ -417,7 +417,6 @@ function displayRawData() {
 calcButtons.forEach(calcButton => calcButton.addEventListener('click', collectData))
 
 // TO DO: 
-// Divide by / 0 doesn't work if raw data ends in /, but there is a display number like 1 to be 10 (divide by 10)
 // 8 + 7 * 54 * "equal" - got an error (should not be able to hit equal at this point)
 // Check out decimal points to be found in all kinds of numbers (discovered during mult/div)
 // Disable negative exponent?
