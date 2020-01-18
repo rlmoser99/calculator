@@ -38,12 +38,13 @@ function exponent(a, b) {
 	return Math.pow(a, b);
 }
 
-function collectData() {    
+function collectData(e) {   
+    // hasPreviousCalculation(e); 
     // console.log(this.id);
     warning.textContent = '';   
     switch(this.id) {
         case 'zero':
-            hasPreviousCalculation ()
+            // hasPreviousCalculation(e);
             if (hasPreviousFactorial() === false && hasDivision() === false) {
                 displayNumber = displayNumber + '0';
             } else {
@@ -51,55 +52,55 @@ function collectData() {
             }
             break;
         case 'nine':
-            hasPreviousCalculation();
+            // hasPreviousCalculation(e);
             if (hasPreviousFactorial() === false) {
                 displayNumber = displayNumber + '9';
             }
             break;
         case 'eight':
-            hasPreviousCalculation();
+            // hasPreviousCalculation(e);
             if (hasPreviousFactorial() === false) {
                 displayNumber = displayNumber + '8';
             }
             break;
         case 'seven':
-            hasPreviousCalculation();
+            // hasPreviousCalculation(e);
             if (hasPreviousFactorial() === false) {
                 displayNumber = displayNumber + '7';
             }
             break;
         case 'six':
-            hasPreviousCalculation();
+            // hasPreviousCalculation(e);
             if (hasPreviousFactorial() === false) {
                 displayNumber = displayNumber + '6';
             }
             break;
         case 'five':
-            hasPreviousCalculation();
+            // hasPreviousCalculation(e);
             if (hasPreviousFactorial() === false) {
                 displayNumber = displayNumber + '5';
             }
             break;
         case 'four':
-            hasPreviousCalculation();
+            // hasPreviousCalculation(e);
             if (hasPreviousFactorial() === false) {
                 displayNumber = displayNumber + '4';
             }
             break;
         case 'three':
-            hasPreviousCalculation();
+            // hasPreviousCalculation(e);
             if (hasPreviousFactorial() === false) {
                 displayNumber = displayNumber + '3';
             }
             break;
         case 'two':
-            hasPreviousCalculation();
+            // hasPreviousCalculation(e);
             if (hasPreviousFactorial() === false) {
                 displayNumber = displayNumber + '2';
             }
             break;
         case 'one':
-            hasPreviousCalculation();
+            // hasPreviousCalculation(e);
             if (hasPreviousFactorial() === false) {
                 displayNumber = displayNumber + '1';
             }
@@ -182,7 +183,7 @@ function collectData() {
         case 'equals':
             addDisplayToRaw();
             takeRawForFinalResults()
-            displayNumber = '';
+            // displayNumber = '';
             calculateData();
             // displayNumber = rawData;
             break;
@@ -193,8 +194,8 @@ function collectData() {
     displayWhichNumber();
     // display.textContent = displayNumber;
     displayRawData(event);
-    console.log(displayNumber);
-    console.log(rawData);
+    console.log(`displayNumber ${displayNumber} calculatedAnswer ${calculatedAnswer}`);
+    console.log(`rawData ${rawData} rawDataFinalDisplay ${rawDataFinalDisplay}`)
 }
 
 function displayWhichNumber() {
@@ -311,7 +312,13 @@ function switchPositiveNegative() {
 
 // Add displayNumber to the end of rawData string
 function addDisplayToRaw() {
-    rawData = rawData + displayNumber;
+    if (calculatedAnswer.length == 0) {
+        console.log('There is not calculated answer')
+        rawData = rawData + displayNumber;
+    } else {
+        rawData = calculatedAnswer;
+        console.log('there is a calculated answer')
+    }
 }
 
 // rawData = '1 + 10! - 12^2 * 3 / 0.5 + -4! * 3^2 + -3.75 / 2 - 7';
@@ -423,14 +430,33 @@ function displayRawData() {
 // False: When pushing a button in the normal flow - add to display
 
 // When a number has been pushed after the calculateData (equal sign) has ran. Clears calc.
-function hasPreviousCalculation () {
-    if (rawDataFinalDisplay.length != 0) {
-        displayNumber = '';
-        rawDataFinalDisplay = '';
-        calculatedAnswer = '';
-        rawData = '';
-    }
-}
+// function hasPreviousCalculation(e) {
+//     console.log(e.target.dataset.display)
+//     if (e.target.dataset.display = "clear") {
+//         console.log("hasPreviousCalculation has clear data-set")
+//         // displayNumber = '';
+//         // rawDataFinalDisplay = '';
+//         // calculatedAnswer = '';
+//         // rawData = '';
+//     } else if (e.target.dataset.display = "keep") {
+//         // displayNumber = '';
+//         // rawDataFinalDisplay = '';
+//         // calculatedAnswer = '';
+//         // rawData = '';
+//         console.log('hasPreviousCalculatation has keep data-set')
+//     } else {
+//         console.log('hasPreviousCalculations with no data-set')
+//     }
+// }
+
+// function hasPreviousCalculation() {
+//     if (rawDataFinalDisplay.length != 0) {
+//         displayNumber = '';
+//         rawDataFinalDisplay = '';
+//         calculatedAnswer = '';
+//         rawData = '';
+//     }
+// }
 
 calcButtons.forEach(calcButton => calcButton.addEventListener('click', collectData))
 
