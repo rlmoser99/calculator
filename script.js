@@ -179,11 +179,13 @@ function collectData(e) {
             }
             break;
         case 'equals':
-            addDisplayToRaw();
-            copyRawDataToCalculate();
-            // displayNumber = '';
-            // calculateData();
-            displayNumber = rawDataResult;
+            if (validEquation() === true) {
+                addDisplayToRaw();
+                copyRawDataToCalculate();
+                displayNumber = rawDataResult;
+            } else {
+                warning.textContent = `You must have a valid equation to solve. It can not end with '+ - * /'`
+            }
             break;
         default:
             console.log('default for collectNumbers');
@@ -315,6 +317,15 @@ function clearRawDataResult() {
     }
 }
 
+// Must valiate equation, so it does not end with +_*?
+function validEquation() {
+    if (rawData.charAt(rawData.length - 2).match(/\+\-\*\//)) {
+        return true;
+    } else {
+        return false;
+    }
+}
+
 // Make a copy of rawData to be able to display after calculateData
 function copyRawDataToCalculate() {
     let rawDataArray = rawData.split(' ');
@@ -417,7 +428,6 @@ function displayRawData() {
 calcButtons.forEach(calcButton => calcButton.addEventListener('click', collectData))
 
 // TO DO: 
-// 8 + 7 * 54 * "equal" - got an error (should not be able to hit equal at this point)
 // Check out decimal points to be found in all kinds of numbers (discovered during mult/div)
 // Disable negative exponent?
 // Round large numbers / decimals points
