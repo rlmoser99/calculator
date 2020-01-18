@@ -128,7 +128,9 @@ function collectData(e) {
             break;
         case 'factorial':
             if (hasPreviousNumber() === true && hasPreviousPeriod() === false) {
+                console.log(displayNumber)
                 displayNumber = displayNumber + '!';
+                console.log(displayNumber)
                 addDisplayToRaw();
                 displayNumber = '';
             } else {
@@ -268,8 +270,10 @@ function hasDivision() {
 // Check to see if user clicked on period twice in the same number (for example: 3.14.159)
 function hasPreviousPeriod() {
     if (displayNumber.match(/\./)) {
+        console.log('hasPreviousPeriod is true')
         return true;
     } else {
+        console.log('hasPreviousPeriod is false')
         return false;
     }
 }
@@ -285,9 +289,12 @@ function hasExponent() {
 
 // Check to see if there is a number preceding for factorial and exponent
 function hasPreviousNumber() {
+    console.log(displayNumber);
     if (displayNumber.charAt(displayNumber.length - 1).match(/\d/)) {
+        console.log('hasPreviousNumber is true');
         return true;
     } else {
+        console.log('hasPreviousNumber is false');
         return false;
     }
 }
@@ -341,7 +348,7 @@ function addDisplayToRaw() {
         // console.log('There is not calculated answer')
         rawData = rawData + displayNumber;
     } else {
-        rawData = rawDataResult;
+        rawData = displayNumber;
         rawDataResult = '';
         console.log('there was a calculated answer, now there is none')
     }
@@ -460,8 +467,6 @@ function displayRawData() {
 calcButtons.forEach(calcButton => calcButton.addEventListener('click', collectData))
 
 // TO DO: 
-// Remove data-sets
-// 5 * 4 = 20 ! - factorial did not get added to rawData
 // 8 * 1 = 8 ^ 2 - reset the board, because it #2 resets board.
 // 8 + 7 * 54 * "equal" - got an error (should not be able to hit equal at this point)
 // Store the Result of the equal button to use again.
