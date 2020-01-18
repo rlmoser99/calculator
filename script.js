@@ -461,9 +461,9 @@ calcButtons.forEach(calcButton => calcButton.addEventListener('click', collectDa
 
 // TO DO: 
 // Remove data-sets
+// 5 * 4 = 20 ! - factorial did not get added to rawData
 // 8 * 1 = 8 ^ 2 - reset the board, because it #2 resets board.
 // 8 + 7 * 54 * "equal" - got an error (should not be able to hit equal at this point)
-// 5 * 4 = 20 ! - factorial did not get added to rawData
 // Store the Result of the equal button to use again.
 // Check out decimal points to be found in all kinds of numbers (discoverd during mult/div)
 // Disable negative exponent?
