@@ -4,10 +4,7 @@ const rawDisplay = document.querySelector('.raw-display');
 const warning = document.querySelector('.warning')
 let displayNumber = '';
 let rawData = '';
-// let rawDataFinalDisplay = '';
-// let calculatedAnswer = '';
 let rawDataResult = '';
-// let result = '';
 
 function add(a, b) {
     return a + b;
@@ -39,8 +36,6 @@ function exponent(a, b) {
 }
 
 function collectData(e) {   
-    // console.log(`At the beginning of collectData the displayNumber is ${displayNumber}`);
-    // console.log(`At the beginning of collectData the rawDataResult is ${rawDataResult}`);
     warning.textContent = '';   
     // console.log(this.id);
     switch(this.id) {
@@ -128,9 +123,7 @@ function collectData(e) {
             break;
         case 'factorial':
             if (hasPreviousNumber() === true && hasPreviousPeriod() === false) {
-                console.log(displayNumber)
                 displayNumber = displayNumber + '!';
-                console.log(displayNumber)
                 addDisplayToRaw();
                 displayNumber = '';
             } else {
@@ -188,7 +181,6 @@ function collectData(e) {
         case 'equals':
             addDisplayToRaw();
             copyRawDataToCalculate();
-            // takeRawForFinalResults()
             // displayNumber = '';
             // calculateData();
             displayNumber = rawDataResult;
@@ -197,35 +189,14 @@ function collectData(e) {
             console.log('default for collectNumbers');
             break;
     }
-    // displayWhichNumber();
     display.textContent = displayNumber;
     displayRawData();
-    // console.log(`displayNumber ${displayNumber} calculatedAnswer ${calculatedAnswer}`);
-    // console.log(`rawData ${rawData} rawDataFinalDisplay ${rawDataFinalDisplay}`)
 }
-
-// function displayWhichNumber() {
-//     if (rawDataResult.length == 0) {
-//         // console.log('displayWhichNumber will display number')
-//         display.textContent = displayNumber;
-//     } else {
-//         display.textContent = rawDataResult;
-//         // console.log('displayWhichNumber will display calculatedAnswer')
-//     }
-// }
-function displayWhichNumber() {
-    if (rawDataResult.length != 0) {
-        // console.log('displayWhichNumber will display number')
-        displayNumber = rawDataResult;
-    } 
-}
-// calculatedAnswer = '' when user re-starts.
 
 function resetDisplayNumber() {
     if (rawDataResult != 0) {
         displayNumber = '';
         rawDataResult = '';
-        console.log('resetDisplayNumber')
     }
 }
 
@@ -239,18 +210,7 @@ function isDoubleOperator() {
     }
 }
 
-// Check to see if a user clicks on a number immediately after choosing factorial (for example: 3!4)
-// function hasPreviousFactorial() {
-//     if (rawData.charAt(rawData.length - 1).match(/!/) && displayNumber.length == 0) {
-//         // if (warning.textContent.length == 0) {
-//         //     warning.textContent = 'Please use a math operator after using a factorial'
-//         // }
-//         return true;
-//     } else {
-//         return false;
-//     }
-// }
-// TESTING OUT WHY 4! + 50 won't work
+// Checks to see if user inputs number after factorial (for example: 3!4)
 function hasPreviousFactorial() {
     if (rawData.charAt(rawData.length - 1).match(/!/)) {
         return true;
@@ -271,10 +231,8 @@ function hasDivision() {
 // Check to see if user clicked on period twice in the same number (for example: 3.14.159)
 function hasPreviousPeriod() {
     if (displayNumber.match(/\./)) {
-        console.log('hasPreviousPeriod is true')
         return true;
     } else {
-        console.log('hasPreviousPeriod is false')
         return false;
     }
 }
@@ -290,12 +248,9 @@ function hasExponent() {
 
 // Check to see if there is a number preceding for factorial and exponent
 function hasPreviousNumber() {
-    console.log(displayNumber);
     if (displayNumber.charAt(displayNumber.length - 1).match(/\d/)) {
-        console.log('hasPreviousNumber is true');
         return true;
     } else {
-        console.log('hasPreviousNumber is false');
         return false;
     }
 }
@@ -353,22 +308,21 @@ function addDisplayToRaw() {
     }
 }
 
+// Must clear rawDataResult, to use exponents on the product on previous equation
 function clearRawDataResult() {
     if (rawDataResult.length != 0) {
         rawDataResult = '';
     }
 }
 
+// Make a copy of rawData to be able to display after calculateData
 function copyRawDataToCalculate() {
     let rawDataArray = rawData.split(' ');
     rawDataResult = rawDataArray.join(' ');
     calculateData();
 }
 
-// rawData = '1 + 10! - 12^2 * 3 / 0.5 + -4! * 3^2 + -3.75 / 2 - 7';
 function calculateData() {   
-    // console.log(rawDataResult);
-    // console.log(rawData)
     if (rawDataResult.match(/\d+!/)) {
         solveFactorial();
     } else if (rawDataResult.match(/\d+\^\d+/)) {
@@ -378,10 +332,7 @@ function calculateData() {
     } else if ((rawDataResult.match(/[\s][\+|-][\s]/))) {
         solveAdditionOrSubtraction();
     } else {
-        console.log(`calculateData is finished, the rawDataResult: ${rawDataResult}`)
         return rawDataResult;
-        // displayNumber = rawData;
-        // calculatedAnswer = rawData;
     }
 }
 
@@ -392,7 +343,7 @@ function solveFactorial() {
     factorialArray.pop();
     factorialNumber = factorialArray.join('');
     let factorialResult = factorial(factorialNumber);
-    // Replace the rawData with the factorialResult
+    // Replace the rawDataResult with the factorialResult
     let factoralRawData = /\d+!/[Symbol.replace](rawDataResult, factorialResult);
     rawDataResult = factoralRawData;
     calculateData();
@@ -405,7 +356,7 @@ function solveExponent() {
     let wholeNumber = exponentMatch.match(/^\d+/)[0];
     let exponentNumber = exponentMatch.match(/\d+$/)[0];
     let exponentResult = exponent(wholeNumber, exponentNumber);
-    // replace rawData with the exponentResult
+    // replace rawDataResult with the exponentResult
     let exponentRawData = exponentRegExp[Symbol.replace](rawDataResult, exponentResult);
     rawDataResult = exponentRawData;
     calculateData();
@@ -421,12 +372,12 @@ function solveMultiplicationOrDivison() {
     let secondNumber = multiplicationDivisionMatch.match(numberRegExp)[1];
     if (isMultiplicationOrDivision == '*') {
         let multiplicationResult = multiply(firstNumber, secondNumber);
-        // Replace rawData with multiplicationResult
+        // Replace rawDataResult with multiplicationResult
         let multiplicationRawData = multiplicationDivisionRegExp[Symbol.replace](rawDataResult, multiplicationResult);
         rawDataResult = multiplicationRawData;
     } else {
         let divisionResult = divide(firstNumber, secondNumber);
-        // Replace rawData with divisionResult
+        // Replace rawDataResult with divisionResult
         let divisionRawData = multiplicationDivisionRegExp[Symbol.replace](rawDataResult, divisionResult);
         rawDataResult = divisionRawData;
     }
@@ -453,28 +404,22 @@ function solveAdditionOrSubtraction() {
     calculateData()
 }
 
-// function takeRawForFinalResults() {
-//     let rawDataFinalArray = rawData.split(' ');
-//     rawDataFinalDisplay = rawDataFinalArray.join(' ');
-// }
-
+// Re-sets the rawData after the equal sign has been used
 function displayRawData() {
-    // console.log(event.target.className);
     if (rawDataResult.length == 0) {
         rawDisplay.textContent = rawData;
     } else {
         rawDisplay.textContent = rawData;
         rawData = '';
-        // displayNumber = rawDataResult;
     }
 }
 
 calcButtons.forEach(calcButton => calcButton.addEventListener('click', collectData))
 
 // TO DO: 
+// Divide by / 0 doesn't work if raw data ends in /, but there is a display number like 1 to be 10 (divide by 10)
 // 8 + 7 * 54 * "equal" - got an error (should not be able to hit equal at this point)
-// Store the Result of the equal button to use again.
-// Check out decimal points to be found in all kinds of numbers (discoverd during mult/div)
+// Check out decimal points to be found in all kinds of numbers (discovered during mult/div)
 // Disable negative exponent?
 // Round large numbers / decimals points
 // Add keyboard
