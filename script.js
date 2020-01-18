@@ -237,11 +237,19 @@ function isDoubleOperator() {
 }
 
 // Check to see if a user clicks on a number immediately after choosing factorial (for example: 3!4)
+// function hasPreviousFactorial() {
+//     if (rawData.charAt(rawData.length - 1).match(/!/) && displayNumber.length == 0) {
+//         // if (warning.textContent.length == 0) {
+//         //     warning.textContent = 'Please use a math operator after using a factorial'
+//         // }
+//         return true;
+//     } else {
+//         return false;
+//     }
+// }
+// TESTING OUT WHY 4! + 50 won't work
 function hasPreviousFactorial() {
-    if (rawData.charAt(rawData.length - 1).match(/!/) && displayNumber.length == 0) {
-        if (warning.textContent.length == 0) {
-            warning.textContent = 'Please use a math operator after using a factorial'
-        }
+    if (rawData.charAt(rawData.length - 1).match(/!/)) {
         return true;
     } else {
         return false;
@@ -250,10 +258,10 @@ function hasPreviousFactorial() {
 
 // Check to see if a user is trying to divide by 0 (for example: 32 / 0)
 function hasDivision() {
-    if (rawData.charAt(rawData.length - 1).match(/\//)) {
-        return false;
-    } else {
+    if (rawData.charAt(rawData.length - 2).match(/\//)) {
         return true;
+    } else {
+        return false;
     }
 }
 
@@ -454,8 +462,6 @@ calcButtons.forEach(calcButton => calcButton.addEventListener('click', collectDa
 // TO DO: 
 // Remove data-sets
 // 8 * 1 = 8 ^ 2 - reset the board, because it #2 resets board.
-// 5*4 = 20 -2 = 2018 (2020-2)
-// 9^8 + 50 - got an error message on the 0
 // 8 + 7 * 54 * "equal" - got an error (should not be able to hit equal at this point)
 // 5 * 4 = 20 ! - factorial did not get added to rawData
 // Store the Result of the equal button to use again.
