@@ -362,7 +362,7 @@ function calculateData() {
         solveAdditionOrSubtraction();
     } else {
         if (rawDataResult.length > 12) {
-            // console.log('Need to format rawDataResults')
+            // This formatting is not scientific
             formatRawDataResults();
             return rawDataResult;
         } else {
@@ -449,22 +449,38 @@ function displayRawData() {
     }
 }
 
+// This is not REAL scientific numbers - This is just to give an illusion that it is.
 function formatRawDataResults() {
+    // Find if there is scientific notation & if so, get length & remove 'n'
+    let rawDataRegExp = /e\d+/;
+    let removeDigits = (rawDataResult.length - 10);
+    let oldNotation = '';
+    if (rawDataResult.match(rawDataRegExp)) {
+        rawDataMatch = rawDataResult.match(rawDataRegExp)[0];
+        oldNotation = rawDataMatch.length - 1;
+        rawDataResult = /e/[Symbol.replace](rawDataResult, 0)
+    }
     let formattedRawDataArray = rawDataResult.split('');
-    formattedRawDataArray.pop();
-    console.log(formattedRawDataArray);
-    let formattedRawData = formattedRawDataArray.join('');
+    // Need to either remove enough places for single or double digits in scientific notation 
+    if ((removeDigits + oldNotation) >= 10) {
+        for (i = 0; i <= removeDigits; i++) {
+            formattedRawDataArray.pop();
+        }
+    } else {
+        for (i = 1; i <= removeDigits; i++) {
+            formattedRawDataArray.pop();
+        }
+    }
+    let formattedRawData = formattedRawDataArray.join('') + `e${removeDigits + oldNotation}`;
     rawDataResult = formattedRawData;
     warning.textContent = `The result has been formatted to fit in the display area`;
-    calculateData();
 }
 
 calcButtons.forEach(calcButton => calcButton.addEventListener('click', collectData))
 
 // TO DO: 
-// Round large numbers / decimals points ~12 charaacter for display
-// Look for "e+" in result to be able to reduce it differently
 // 
+// Change warning text color & make it larger
 // Add keyboard
 // Lots of 777777777777! - did not work. Not sure why. - I think it locked down the computer! Limit size of factorial.
 // Make backspace icon the teal color?
