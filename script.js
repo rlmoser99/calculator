@@ -214,6 +214,7 @@ function formatDisplayNumber() {
 function exceedsDisplay() {
     if (displayNumber.length >= 18) {
         // display.style.justifyContent = "left";
+        warning.textContent = `You can not enter more then 18 digits`
         return true;
     } else {
         return false;
@@ -361,7 +362,13 @@ function calculateData() {
     } else if ((rawDataResult.match(/[\s][\+|-][\s]/))) {
         solveAdditionOrSubtraction();
     } else {
-        return rawDataResult;
+        if (rawDataResult.length >= 18) {
+            // console.log('Need to format rawDataResults')
+            formatRawDataResults();
+            return rawDataResult;
+        } else {
+            return rawDataResult;
+        }
     }
 }
 
@@ -443,12 +450,25 @@ function displayRawData() {
     }
 }
 
+function formatRawDataResults() {
+    let formattedRawDataArray = rawDataResult.split('');
+    formattedRawDataArray.pop();
+    console.log(formattedRawDataArray);
+    let formattedRawData = formattedRawDataArray.join('');
+    rawDataResult = formattedRawData;
+    warning.textContent = `The result has been formatted to fit in the display area`;
+    calculateData();
+}
+
 calcButtons.forEach(calcButton => calcButton.addEventListener('click', collectData))
 
 // TO DO: 
+// Get rid of the 12 point threshold and make it all 12, not 18 - or pick a better "size"
 // Round large numbers / decimals points ~12 charaacter for display
 // Set-up a warning for length of digits in display
 // Each time a digit is entered, check the length of display and cut it off at a certain number
+// Still need to limit the number of decimal points
 // 
 // Add keyboard
-// Lots of 777777777777! - did not work. Not sure why. - I think it locked down the computer!
+// Lots of 777777777777! - did not work. Not sure why. - I think it locked down the computer! Limit size of factorial.
+// Make backspace icon the teal color?
