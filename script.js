@@ -124,7 +124,7 @@ function collectData(e) {
             }
             break;
         case 'factorial':
-            if (hasPreviousNumber() === true && hasPreviousPeriod() === false && exceedsDisplay() === false) {
+            if (hasPreviousNumber() === true && hasPreviousPeriod() === false && exceedsDisplay() === false && hasTwoDigitsMax() === true) {
                 displayNumber = displayNumber + '!';
                 addDisplayToRaw();
                 displayNumber = '';
@@ -235,6 +235,17 @@ function hasPreviousFactorial() {
     if (rawData.charAt(rawData.length - 1).match(/!/)) {
         return true;
     } else {
+        return false;
+    }
+}
+
+function hasTwoDigitsMax() {
+    if (displayNumber.length <= 2) {
+        console.log('hasTwoDigitsMax is true')
+        return true;
+    } else {
+        console.log('hasTwoDigitsMax is false')
+        warning.textContent = `The max for a factorial is 2 digits on this calculator`
         return false;
     }
 }
@@ -482,5 +493,6 @@ calcButtons.forEach(calcButton => calcButton.addEventListener('click', collectDa
 // 
 // Change warning text color & make it larger
 // Add keyboard
-// Lots of 777777777777! - did not work. Not sure why. - I think it locked down the computer! Limit size of factorial.
 // Make backspace icon the teal color?
+// rename isDoubleOperator - to previousOperator
+// Change warning text back to each boolean check.
