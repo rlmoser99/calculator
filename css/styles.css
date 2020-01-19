@@ -37,10 +37,7 @@ body {
     font-family: monospace;
     justify-self: stretch;
     justify-content: right;
-    /* overflow: scroll; */
-    /* overflow-y: scroll; */
-    /* overflow-x: scroll; */
-    /* overflow-wrap: break-word; */
+    overflow: scroll;
 }
 
 .display {
@@ -122,6 +119,9 @@ button:hover {
 }
 
 .warning {
-    color: #273043;
+    /* color: #273043; */
+    color: #ff7800;
+    /* background-color:#ff7800; */
+    /* padding: 15px; */
     font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
 }

@@ -41,10 +41,8 @@ function collectData(e) {
     switch(this.id) {
         case 'zero':
             resetDisplayNumber();
-            if (hasPreviousFactorial() === false && exceedsDisplay() === false && (hasDivision() === false) || hasPreviousNumber() === true) {
+            if (hasPreviousFactorial() === false && exceedsDisplay() === false && hasDivision() === false) {
                 displayNumber = displayNumber + '0';
-            } else {
-                warning.textContent = `You can not enter '0' directly after a division or factorial sign`;
             }
             break;
         case 'nine':
@@ -103,12 +101,10 @@ function collectData(e) {
             break;
         case 'period':
             resetDisplayNumber();
-            if (displayNumber.length == 0 && hasPreviousFactorial() === false && exceedsDisplay() === false) {
+            if (displayNumber.length == 0 && hasPreviousFactorial() === false) {
                 displayNumber = displayNumber + '0.';
-            } else if (hasPreviousFactorial() === false && hasPreviousPeriod() === false && hasExponent() === false) {
+            } else if (hasPreviousFactorial() === false && hasPreviousPeriod() === false && hasExponent() === false && exceedsDisplay() === false) {
                 displayNumber = displayNumber + '.';
-            } else {
-                warning.textContent = "To use a decimal point, you can not have another decimal point, factorial, or exponent";
             }
             break;
         case 'clear':
@@ -128,33 +124,29 @@ function collectData(e) {
                 displayNumber = displayNumber + '!';
                 addDisplayToRaw();
                 displayNumber = '';
-            } else {
-                warning.textContent = `You must use a whole number before using a factorial '!'`;
             }
             break;
         case 'exponent':
             if (hasPreviousNumber() === true && hasPreviousPeriod() === false && exceedsDisplay() === false) {
                 clearRawDataResult();
                 displayNumber = displayNumber + '^';
-            } else {
-                warning.textContent = `A whole number 'x' must be selected before using the exponent for a whole number 'y'`;
             }
             break;
         case 'backspace':
+            resetDisplayNumber();
             backspaceNumberOrOperator()
             break;
         case 'plus':
-            if (isDoubleOperator() === false) {
+            if (hasPreviousOperator() === false) {
                 addDisplayToRaw();
                 rawData = rawData + ' + ';
                 displayNumber = '';
             } else {
                 warning.textContent = `You must have a number before choosing '+'`
-                alert('You must have a number before choosing "+" ')
             }
             break;
         case 'minus':
-            if (isDoubleOperator() === false) {
+            if (hasPreviousOperator() === false) {
                 addDisplayToRaw();
                 rawData = rawData + ' - ';
                 displayNumber = '';
@@ -163,7 +155,7 @@ function collectData(e) {
             }
             break;
         case 'times':
-            if (isDoubleOperator() === false) {
+            if (hasPreviousOperator() === false) {
                 addDisplayToRaw();
                 rawData = rawData + ' * ';
                 displayNumber = '';
@@ -172,7 +164,7 @@ function collectData(e) {
             }
             break;
         case 'divide':
-            if (isDoubleOperator() === false) {
+            if (hasPreviousOperator() === false) {
                 addDisplayToRaw();
                 rawData = rawData + ' / ';
                 displayNumber = '';
@@ -190,10 +182,9 @@ function collectData(e) {
             }
             break;
         default:
-            console.log('default for collectNumbers');
+            console.log('collectData was ran & only default happened');
             break;
     }
-    // formatDisplayNumber();
     display.textContent = displayNumber;
     displayRawData();
 }
@@ -205,24 +196,20 @@ function resetDisplayNumber() {
     }
 }
 
-// function formatDisplayNumber() {
-//     if (displayNumber.length > 12) {
-//         display.style.fontSize = "2rem"
-//     }
-// }
+// BOOLEAN CHECKS:
 
+// Limits the number of digits that can be entered at one time
 function exceedsDisplay() {
     if (displayNumber.length >= 12) {
-        warning.textContent = `You can not enter more then 12 digits`
+        warning.textContent = `Up to 12 digits, including a decimal point, negative sign or exponent, can be entered on this calculator`
         return true;
     } else {
         return false;
     }
 }
 
-// Check to see if user clicks two math operators back to back
-// Exception: factorial (!) and period (.)
-function isDoubleOperator() {
+// Check to see if user clicks two math operators back to back - exception: factorial (!) and period (.)
+function hasPreviousOperator() {
     if (displayNumber.length != 0 || (rawData.charAt(rawData.length - 1).match(/[\d!\.]/))) {
         return false;
     } else {
@@ -233,26 +220,27 @@ function isDoubleOperator() {
 // Checks to see if user inputs number after factorial (for example: 3!4)
 function hasPreviousFactorial() {
     if (rawData.charAt(rawData.length - 1).match(/!/)) {
+        warning.textContent = `Please enter a math operator after using a factorial.`;
         return true;
     } else {
         return false;
     }
 }
 
+// Factorials can increase too quickly, so I limited it to 2 digits
 function hasTwoDigitsMax() {
     if (displayNumber.length <= 2) {
-        console.log('hasTwoDigitsMax is true')
         return true;
     } else {
-        console.log('hasTwoDigitsMax is false')
-        warning.textContent = `The max for a factorial is 2 digits on this calculator`
+        warning.textContent = `The max for a factorial is 2 digits on this calculator.`;
         return false;
     }
 }
 
-// Check to see if a user is trying to divide by 0 (for example: 32 / 0)
+// Check to see if a user is trying to divide by 0, but still let user divide by 10 (for example: 32 / 0)
 function hasDivision() {
-    if (rawData.charAt(rawData.length - 2).match(/\//) || displayNumber.charAt(displayNumber.length - 1).match(/\d/)) {
+    if (rawData.charAt(rawData.length - 2).match(/\//) && displayNumber.length == 0) {
+        warning.textContent = `I'm sure in your infinite wisdom you already know the answer the ${rawData} 0.`;
         return true;
     } else {
         return false;
@@ -262,6 +250,7 @@ function hasDivision() {
 // Check to see if user clicked on period twice in the same number (for example: 3.14.159)
 function hasPreviousPeriod() {
     if (displayNumber.match(/\./)) {
+        warning.textContent = `You can not have a decimal point in a exponent, factorial, or if there is already a decimal point.`;
         return true;
     } else {
         return false;
@@ -271,6 +260,7 @@ function hasPreviousPeriod() {
 // Check for an exponent in number, before adding a decimal point.
 function hasExponent() {
     if (displayNumber.match(/\^/)) {
+        warning.textContent = `You can not use a decimal point in an exponent on this calculator`;
         return true;
     } else {
         return false;
@@ -282,9 +272,12 @@ function hasPreviousNumber() {
     if (displayNumber.charAt(displayNumber.length - 1).match(/\d/)) {
         return true;
     } else {
+        warning.textContent = `You must enter a number before using a factorial or exponent`;
         return false;
     }
 }
+
+// CALCULATOR FUNCTIONALITY
 
 // Backspace 1 space in Display Number, or 1-2 in Raw Data
 function backspaceNumberOrOperator() {
@@ -362,6 +355,7 @@ function copyRawDataToCalculate() {
     calculateData();
 }
 
+// Main function that processes the rawData to rawDataResult
 function calculateData() {   
     if (rawDataResult.match(/\d+!/)) {
         solveFactorial();
@@ -460,7 +454,7 @@ function displayRawData() {
     }
 }
 
-// This is not REAL scientific numbers - This is just to give an illusion that it is.
+// This is not a REAL scientific calculation - This is simply gives an illusion that it is & keeps within 12 digit limit
 function formatRawDataResults() {
     // Find if there is scientific notation & if so, get length & remove 'n'
     let rawDataRegExp = /e\d+/;
@@ -491,8 +485,5 @@ calcButtons.forEach(calcButton => calcButton.addEventListener('click', collectDa
 
 // TO DO: 
 // 
-// Change warning text color & make it larger
+// Update warning area - color? make it larger?
 // Add keyboard
-// Make backspace icon the teal color?
-// rename isDoubleOperator - to previousOperator
-// Change warning text back to each boolean check.
