@@ -193,7 +193,7 @@ function collectData(e) {
             console.log('default for collectNumbers');
             break;
     }
-    formatDisplayNumber();
+    // formatDisplayNumber();
     display.textContent = displayNumber;
     displayRawData();
 }
@@ -205,16 +205,15 @@ function resetDisplayNumber() {
     }
 }
 
-function formatDisplayNumber() {
-    if (displayNumber.length > 12) {
-        display.style.fontSize = "2rem"
-    }
-}
+// function formatDisplayNumber() {
+//     if (displayNumber.length > 12) {
+//         display.style.fontSize = "2rem"
+//     }
+// }
 
 function exceedsDisplay() {
-    if (displayNumber.length >= 18) {
-        // display.style.justifyContent = "left";
-        warning.textContent = `You can not enter more then 18 digits`
+    if (displayNumber.length >= 12) {
+        warning.textContent = `You can not enter more then 12 digits`
         return true;
     } else {
         return false;
@@ -362,7 +361,7 @@ function calculateData() {
     } else if ((rawDataResult.match(/[\s][\+|-][\s]/))) {
         solveAdditionOrSubtraction();
     } else {
-        if (rawDataResult.length >= 18) {
+        if (rawDataResult.length > 12) {
             // console.log('Need to format rawDataResults')
             formatRawDataResults();
             return rawDataResult;
@@ -463,11 +462,8 @@ function formatRawDataResults() {
 calcButtons.forEach(calcButton => calcButton.addEventListener('click', collectData))
 
 // TO DO: 
-// Get rid of the 12 point threshold and make it all 12, not 18 - or pick a better "size"
 // Round large numbers / decimals points ~12 charaacter for display
-// Set-up a warning for length of digits in display
-// Each time a digit is entered, check the length of display and cut it off at a certain number
-// Still need to limit the number of decimal points
+// Look for "e+" in result to be able to reduce it differently
 // 
 // Add keyboard
 // Lots of 777777777777! - did not work. Not sure why. - I think it locked down the computer! Limit size of factorial.
