@@ -36,69 +36,78 @@ function exponent(a, b) {
 }
 
 function collectData(e) {   
-    warning.textContent = '';   
-    // console.log(this.id);
-    switch(this.id) {
-        case 'zero':
+    warning.textContent = '';
+    let data = '';
+    console.log(`e.key is ${e.key}`);
+    console.log(`this.id is ${this.id}`);
+    if (e.key === undefined) {
+        data = this.id;
+    } else {
+        data = e.key;
+    }
+    console.log(`DATA: ${data}`)
+    switch(data) {
+        case '0':
             resetDisplayNumber();
             if (hasPreviousFactorial() === false && exceedsDisplay() === false && hasDivision() === false) {
                 displayNumber = displayNumber + '0';
             }
             break;
-        case 'nine':
+        case '9':
             resetDisplayNumber();
             if (hasPreviousFactorial() === false && exceedsDisplay() === false) {
                 displayNumber = displayNumber + '9';
             }
             break;
-        case 'eight':
+        case '8':
             resetDisplayNumber();
             if (hasPreviousFactorial() === false && exceedsDisplay() === false) {
                 displayNumber = displayNumber + '8';
             }
             break;
-        case 'seven':
+        case '7':
             resetDisplayNumber();
             if (hasPreviousFactorial() === false && exceedsDisplay() === false) {
                 displayNumber = displayNumber + '7';
             }
             break;
-        case 'six':
+        case '6':
             resetDisplayNumber();
             if (hasPreviousFactorial() === false && exceedsDisplay() === false) {
                 displayNumber = displayNumber + '6';
             }
             break;
-        case 'five':
+        case '5':
             resetDisplayNumber();
             if (hasPreviousFactorial() === false && exceedsDisplay() === false) {
                 displayNumber = displayNumber + '5';
             }
             break;
-        case 'four':
+        case '4':
             resetDisplayNumber();
             if (hasPreviousFactorial() === false && exceedsDisplay() === false) {
                 displayNumber = displayNumber + '4';
             }
             break;
-        case 'three':
+        case '3':
             resetDisplayNumber();
             if (hasPreviousFactorial() === false && exceedsDisplay() === false) {
                 displayNumber = displayNumber + '3';
             }
             break;
-        case 'two':
+        case '2':
             resetDisplayNumber();
             if (hasPreviousFactorial() === false && exceedsDisplay() === false) {
                 displayNumber = displayNumber + '2';
             }
             break;
-        case 'one':
+        case '1':
             resetDisplayNumber();
             if (hasPreviousFactorial() === false && exceedsDisplay() === false) {
                 displayNumber = displayNumber + '1';
             }
             break;
+        case '.':
         case 'period':
             resetDisplayNumber();
             if (displayNumber.length == 0 && hasPreviousFactorial() === false) {
@@ -107,6 +116,8 @@ function collectData(e) {
                 displayNumber = displayNumber + '.';
             }
             break;
+        case 'Escape':
+        case 'Delete':
         case 'clear':
             let clearConfirm = confirm('Are you sure you want to clear everything?');
             if (clearConfirm) {
@@ -114,11 +125,14 @@ function collectData(e) {
                 rawData = '';
             }
             break;
-        case 'pos-neg':
+        case 'ArrowUp':
+        case 'ArrowDown':
+        case 'positive-negative':
             if (exceedsDisplay() === false) {
                 switchPositiveNegative();
             }
             break;
+        case '!':
         case 'factorial':
             if (hasPreviousNumber() === true && hasPreviousPeriod() === false && exceedsDisplay() === false && hasTwoDigitsMax() === true) {
                 displayNumber = displayNumber + '!';
@@ -126,16 +140,18 @@ function collectData(e) {
                 displayNumber = '';
             }
             break;
+        case '^':
         case 'exponent':
             if (hasPreviousNumber() === true && hasPreviousPeriod() === false && exceedsDisplay() === false) {
                 clearRawDataResult();
                 displayNumber = displayNumber + '^';
             }
             break;
-        case 'backspace':
+        case 'Backspace':
             resetDisplayNumber();
             backspaceNumberOrOperator()
             break;
+        case '+':
         case 'plus':
             if (hasPreviousOperator() === false) {
                 addDisplayToRaw();
@@ -145,6 +161,7 @@ function collectData(e) {
                 warning.textContent = `You must have a number before choosing '+'`
             }
             break;
+        case '-':
         case 'minus':
             if (hasPreviousOperator() === false) {
                 addDisplayToRaw();
@@ -154,6 +171,7 @@ function collectData(e) {
                 warning.textContent = `You must have a number before choosing '-'`
             }
             break;
+        case '*':
         case 'times':
             if (hasPreviousOperator() === false) {
                 addDisplayToRaw();
@@ -163,6 +181,7 @@ function collectData(e) {
                 warning.textContent = `You must have a number before choosing '*'`
             }
             break;
+        case '/':
         case 'divide':
             if (hasPreviousOperator() === false) {
                 addDisplayToRaw();
@@ -172,6 +191,8 @@ function collectData(e) {
                 warning.textContent = `You must have a number before choosing '/'`
             }
             break;
+        case '=':
+        case 'Enter':
         case 'equals':
             addDisplayToRaw();
             if (validEquation() === true) {
@@ -482,8 +503,13 @@ function formatRawDataResults() {
 }
 
 calcButtons.forEach(calcButton => calcButton.addEventListener('click', collectData))
+// calcButtons.forEach(calcButton => calcButton.addEventListener('click', dataSort))
+window.addEventListener('keydown', collectData);
 
 // TO DO: 
 // 
 // Update warning area - color? make it larger?
 // Add keyboard
+// Keyboard - pos-neg & AC button
+// function backspace is delete
+// Think I need button images to bleed mouse-event.
