@@ -179,8 +179,8 @@ function collectData(e) {
             }
             break;
         case 'equals':
+            addDisplayToRaw();
             if (validEquation() === true) {
-                addDisplayToRaw();
                 copyRawDataToCalculate();
                 displayNumber = rawDataResult;
             } else {
@@ -317,11 +317,13 @@ function clearRawDataResult() {
     }
 }
 
-// Must valiate equation, so it does not end with +_*?
+// Must valiate equation, so it does not end with +_*? - The last thing should be a digit or factorial
 function validEquation() {
-    if (rawData.charAt(rawData.length - 2).match(/\+\-\*\//)) {
+    if (rawData.charAt(rawData.length - 1).match(/!|\d/)) {
+        console.log('true')
         return true;
     } else {
+        console.log('false')
         return false;
     }
 }
@@ -428,8 +430,5 @@ function displayRawData() {
 calcButtons.forEach(calcButton => calcButton.addEventListener('click', collectData))
 
 // TO DO: 
-// Check out decimal points to be found in all kinds of numbers (discovered during mult/div)
-// Disable negative exponent?
 // Round large numbers / decimals points
 // Add keyboard
-// Look at creating function to add button text content to displayNumber, rather then hard-code it.
