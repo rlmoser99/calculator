@@ -41,7 +41,7 @@ function collectData(e) {
     switch(this.id) {
         case 'zero':
             resetDisplayNumber();
-            if (hasPreviousFactorial() === false && (hasDivision() === false) || hasPreviousNumber() === true) {
+            if (hasPreviousFactorial() === false && exceedsDisplay() === false && (hasDivision() === false) || hasPreviousNumber() === true) {
                 displayNumber = displayNumber + '0';
             } else {
                 warning.textContent = `You can not enter '0' directly after a division or factorial sign`;
@@ -49,61 +49,61 @@ function collectData(e) {
             break;
         case 'nine':
             resetDisplayNumber();
-            if (hasPreviousFactorial() === false) {
+            if (hasPreviousFactorial() === false && exceedsDisplay() === false) {
                 displayNumber = displayNumber + '9';
             }
             break;
         case 'eight':
             resetDisplayNumber();
-            if (hasPreviousFactorial() === false) {
+            if (hasPreviousFactorial() === false && exceedsDisplay() === false) {
                 displayNumber = displayNumber + '8';
             }
             break;
         case 'seven':
             resetDisplayNumber();
-            if (hasPreviousFactorial() === false) {
+            if (hasPreviousFactorial() === false && exceedsDisplay() === false) {
                 displayNumber = displayNumber + '7';
             }
             break;
         case 'six':
             resetDisplayNumber();
-            if (hasPreviousFactorial() === false) {
+            if (hasPreviousFactorial() === false && exceedsDisplay() === false) {
                 displayNumber = displayNumber + '6';
             }
             break;
         case 'five':
             resetDisplayNumber();
-            if (hasPreviousFactorial() === false) {
+            if (hasPreviousFactorial() === false && exceedsDisplay() === false) {
                 displayNumber = displayNumber + '5';
             }
             break;
         case 'four':
             resetDisplayNumber();
-            if (hasPreviousFactorial() === false) {
+            if (hasPreviousFactorial() === false && exceedsDisplay() === false) {
                 displayNumber = displayNumber + '4';
             }
             break;
         case 'three':
             resetDisplayNumber();
-            if (hasPreviousFactorial() === false) {
+            if (hasPreviousFactorial() === false && exceedsDisplay() === false) {
                 displayNumber = displayNumber + '3';
             }
             break;
         case 'two':
             resetDisplayNumber();
-            if (hasPreviousFactorial() === false) {
+            if (hasPreviousFactorial() === false && exceedsDisplay() === false) {
                 displayNumber = displayNumber + '2';
             }
             break;
         case 'one':
             resetDisplayNumber();
-            if (hasPreviousFactorial() === false) {
+            if (hasPreviousFactorial() === false && exceedsDisplay() === false) {
                 displayNumber = displayNumber + '1';
             }
             break;
         case 'period':
             resetDisplayNumber();
-            if (displayNumber.length == 0 && hasPreviousFactorial() === false) {
+            if (displayNumber.length == 0 && hasPreviousFactorial() === false && exceedsDisplay() === false) {
                 displayNumber = displayNumber + '0.';
             } else if (hasPreviousFactorial() === false && hasPreviousPeriod() === false && hasExponent() === false) {
                 displayNumber = displayNumber + '.';
@@ -119,10 +119,12 @@ function collectData(e) {
             }
             break;
         case 'pos-neg':
-            switchPositiveNegative();
+            if (exceedsDisplay() === false) {
+                switchPositiveNegative();
+            }
             break;
         case 'factorial':
-            if (hasPreviousNumber() === true && hasPreviousPeriod() === false) {
+            if (hasPreviousNumber() === true && hasPreviousPeriod() === false && exceedsDisplay() === false) {
                 displayNumber = displayNumber + '!';
                 addDisplayToRaw();
                 displayNumber = '';
@@ -131,7 +133,7 @@ function collectData(e) {
             }
             break;
         case 'exponent':
-            if (hasPreviousNumber() === true && hasPreviousPeriod() === false) {
+            if (hasPreviousNumber() === true && hasPreviousPeriod() === false && exceedsDisplay() === false) {
                 clearRawDataResult();
                 displayNumber = displayNumber + '^';
             } else {
@@ -191,6 +193,7 @@ function collectData(e) {
             console.log('default for collectNumbers');
             break;
     }
+    formatDisplayNumber();
     display.textContent = displayNumber;
     displayRawData();
 }
@@ -199,6 +202,21 @@ function resetDisplayNumber() {
     if (rawDataResult != 0) {
         displayNumber = '';
         rawDataResult = '';
+    }
+}
+
+function formatDisplayNumber() {
+    if (displayNumber.length > 12) {
+        display.style.fontSize = "2rem"
+    }
+}
+
+function exceedsDisplay() {
+    if (displayNumber.length >= 18) {
+        // display.style.justifyContent = "left";
+        return true;
+    } else {
+        return false;
     }
 }
 
@@ -320,10 +338,8 @@ function clearRawDataResult() {
 // Must valiate equation, so it does not end with +_*? - The last thing should be a digit or factorial
 function validEquation() {
     if (rawData.charAt(rawData.length - 1).match(/!|\d/)) {
-        console.log('true')
         return true;
     } else {
-        console.log('false')
         return false;
     }
 }
@@ -430,5 +446,9 @@ function displayRawData() {
 calcButtons.forEach(calcButton => calcButton.addEventListener('click', collectData))
 
 // TO DO: 
-// Round large numbers / decimals points
+// Round large numbers / decimals points ~12 charaacter for display
+// Set-up a warning for length of digits in display
+// Each time a digit is entered, check the length of display and cut it off at a certain number
+// 
 // Add keyboard
+// Lots of 777777777777! - did not work. Not sure why. - I think it locked down the computer!

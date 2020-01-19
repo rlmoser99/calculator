@@ -37,6 +37,10 @@ body {
     font-family: monospace;
     justify-self: stretch;
     justify-content: right;
+    /* overflow: scroll; */
+    /* overflow-y: scroll; */
+    /* overflow-x: scroll; */
+    /* overflow-wrap: break-word; */
 }
 
 .display {
