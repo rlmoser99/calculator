@@ -9,14 +9,15 @@ body {
 
 .container {
     display: grid;
-    background-color: white;
     border: 1px solid black;
     box-shadow: 3px 3px 3px black;
     margin: 30px auto;
     width: 400px;
     height: 400px;
     grid-template-columns: repeat(4, 1fr);
-    grid-template-rows: 30px repeat(6, 1fr);
+    grid-template-rows: 40px repeat(6, 1fr);
+    grid-gap: 4px;
+    background-color: #242c3d;
 }
 
 .container > * {
@@ -31,12 +32,24 @@ body {
     font-weight: 600;
 }
 
+/* Create small grid for 2 displays */
+.display-area{
+    grid-column: 1 / 4;
+    grid-row: 1 / 3;
+    display: grid;
+    grid-template-rows: 40px auto;
+    grid-template-columns: repeat(3, 1fr);
+    background-color: #00b1c5;
+    align-items: center;
+    justify-content: center;
+}
+
 .display, .raw-display {
-    background: #00b1c5;
     padding: 0 10px;
     font-family: monospace;
     justify-self: stretch;
     justify-content: right;
+    text-align: end;
     overflow: scroll;
 }
 
@@ -44,13 +57,12 @@ body {
     grid-column: 1 / 4;
     grid-row: 2 / 3; 
     color: #273043;
-    font-size: 3rem;
+    font-size: 2.4rem;
 }
 
 .raw-display {
     grid-column: 1 / 4;
     grid-row: 1 / 2;
-    background: #00b1c5;;
     color: white;
     font-size: 1.2rem;
 }
@@ -86,6 +98,10 @@ body {
     background-color: #00b1c5;
 }
 
+.equal:focus{
+    outline-color: white;
+}
+
 button img {
     margin: 0 auto;
 }
@@ -106,8 +122,8 @@ button sup {
 }
 
 button:focus {
-    border: 1px solid #00b1c5;
-    outline: none;
+    /* border: 1px solid #00b1c5; */
+    outline-color: #00b1c5;
 }
 
 button:hover {
