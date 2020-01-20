@@ -261,7 +261,7 @@ function hasTwoDigitsMax() {
 // Check to see if a user is trying to divide by 0, but still let user divide by 10 (for example: 32 / 0)
 function hasDivision() {
     if (rawData.charAt(rawData.length - 2).match(/\//) && displayNumber.length == 0) {
-        warning.textContent = `I'm sure in your infinite wisdom you already know the answer the ${rawData} 0.`;
+        warning.textContent = `This calculator will not divide by 0. I'm sure in your infinite wisdom you already know the answer to ${rawData} 0.`;
         return true;
     } else {
         return false;
@@ -511,3 +511,4 @@ window.addEventListener('keydown', collectData);
 // Keyboard Support: pos-neg(up & down arrows) & AC button (Delete or Escape) 
 // Teach user keyboard shortcuts?
 // function backspace is delete - used Escape
+// Have formatRawDataResults, look for decimal point and just remove without adding 'e'
