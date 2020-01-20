@@ -38,14 +38,14 @@ function exponent(a, b) {
 function collectData(e) {   
     warning.textContent = '';
     let data = '';
-    console.log(`e.key is ${e.key}`);
-    console.log(`this.id is ${this.id}`);
+    // console.log(`e.key is ${e.key}`);
+    // console.log(`this.id is ${this.id}`);
     if (e.key === undefined) {
         data = this.id;
     } else {
         data = e.key;
     }
-    console.log(`DATA: ${data}`)
+    // console.log(`DATA: ${data}`)
     switch(data) {
         case '0':
             resetDisplayNumber();
@@ -203,7 +203,7 @@ function collectData(e) {
             }
             break;
         default:
-            console.log('collectData was ran & only default happened');
+            // console.log('collectData was ran & only default happened');
             break;
     }
     display.textContent = displayNumber;
@@ -503,13 +503,11 @@ function formatRawDataResults() {
 }
 
 calcButtons.forEach(calcButton => calcButton.addEventListener('click', collectData))
-// calcButtons.forEach(calcButton => calcButton.addEventListener('click', dataSort))
 window.addEventListener('keydown', collectData);
 
 // TO DO: 
 // 
 // Update warning area - color? make it larger?
-// Add keyboard
-// Keyboard - pos-neg & AC button
-// function backspace is delete
-// Think I need button images to bleed mouse-event.
+// Keyboard Support: pos-neg(up & down arrows) & AC button (Delete or Escape) 
+// Teach user keyboard shortcuts?
+// function backspace is delete - used Escape

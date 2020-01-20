@@ -1,18 +1,18 @@
-/* Background pattern from Total Subtle Patterns */
-
 html {
     box-sizing: border-box;
 }
 
 body {
-    background-image: url(../img/subtle_white_feathers/subtle_white_feathers.png)
+    background-color: #273043;
+
 }
 
 .container {
     display: grid;
     background-color: white;
     border: 1px solid black;
-    margin: 15px auto;
+    box-shadow: 3px 3px 3px black;
+    margin: 30px auto;
     width: 400px;
     height: 400px;
     grid-template-columns: repeat(4, 1fr);
@@ -23,7 +23,7 @@ body {
     align-items: center;
     justify-content: center;
     display: grid;
-    background-color:#273043;
+    background-color: #242c3d;
     color: #00b1c5;
     border: none;
     font-family: monospace;
@@ -105,12 +105,14 @@ button sup {
     letter-spacing: .1em;
 }
 
-button:focus,
+button:focus {
+    border: 1px solid #00b1c5;
+    outline: none;
+}
+
 button:hover {
-    border: 1px solid #313c54;
     font-size: 2.5rem;
     color: #00cfe6;
-    outline: none;
 }
 
 .warning-container {
@@ -118,10 +120,17 @@ button:hover {
     margin: 15px auto;
 }
 
-.warning {
-    /* color: #273043; */
+h1 {
+    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
     color: #ff7800;
-    /* background-color:#ff7800; */
-    /* padding: 15px; */
+    font-size: 3rem;
+    text-align: center;
+    margin-top: 30px;
+}
+
+.warning {
+    color: #ff7800;
+    font-size: 1.25rem;
+    line-height: 1.75rem;
     font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
 }
