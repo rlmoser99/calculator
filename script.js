@@ -5,6 +5,9 @@ const warning = document.querySelector('.warning')
 let displayNumber = '';
 let rawData = '';
 let rawDataResult = '';
+let removeDigits = '';
+let oldNotation = '';
+let formattedRawDataArray = [];
 
 function add(a, b) {
     return a + b;
@@ -475,19 +478,35 @@ function displayRawData() {
     }
 }
 
-// This is not a REAL scientific calculation - This is simply gives an illusion that it is & keeps within 12 digit limit
+// This is not a REAL scientific notation calculation - This is simply gives an illusion that it is to keep calculator within 12 digit limit
 function formatRawDataResults() {
+    removeDigits = (rawDataResult.length - 10);
+    formattedRawDataArray = rawDataResult.split('');
+    let notationRegExp = /e\+*\d+/;
+    let decimalRegExp = /\./;
     // Find if there is scientific notation & if so, get length & remove 'n'
-    let rawDataRegExp = /e\d+/;
-    let removeDigits = (rawDataResult.length - 10);
-    let oldNotation = '';
-    if (rawDataResult.match(rawDataRegExp)) {
-        rawDataMatch = rawDataResult.match(rawDataRegExp)[0];
+    if (rawDataResult.match(notationRegExp)) {
+        rawDataMatch = rawDataResult.match(notationRegExp)[0];
         oldNotation = rawDataMatch.length - 1;
-        rawDataResult = /e/[Symbol.replace](rawDataResult, 0)
+        rawDataResult = /e\+*/[Symbol.replace](rawDataResult, 0);
+        addNotation(oldNotation);
+    // If the number is less then 1 million & has a decimal point, only remove digits.
+    } else if (rawDataResult < 1000000000 && rawDataResult.match(decimalRegExp)) {
+        for (i = 1; i <= removeDigits - 2; i++) {
+            formattedRawDataArray.pop();
+            console.log(formattedRawDataArray);
+        }
+        let formattedRawData = formattedRawDataArray.join('');
+        rawDataResult = formattedRawData;
+    
+    } else  {
+        addNotation(0);
     }
-    let formattedRawDataArray = rawDataResult.split('');
-    // Need to either remove enough places for single or double digits in scientific notation 
+    warning.textContent = `The result has been formatted to fit in the display area`;
+}
+
+// Need to either remove enough places for single or double digits in scientific notation 
+function addNotation(oldNotation) {
     if ((removeDigits + oldNotation) >= 10) {
         for (i = 0; i <= removeDigits; i++) {
             formattedRawDataArray.pop();
@@ -499,7 +518,6 @@ function formatRawDataResults() {
     }
     let formattedRawData = formattedRawDataArray.join('') + `e${removeDigits + oldNotation}`;
     rawDataResult = formattedRawData;
-    warning.textContent = `The result has been formatted to fit in the display area`;
 }
 
 calcButtons.forEach(calcButton => calcButton.addEventListener('click', collectData))
@@ -507,8 +525,8 @@ window.addEventListener('keydown', collectData);
 
 // TO DO: 
 // 
-// Update warning area - color? make it larger?
 // Keyboard Support: pos-neg(up & down arrows) & AC button (Delete or Escape) 
-// Teach user keyboard shortcuts?
+// Teach user keyboard shortcuts? - Maybe something displays for collectData default
 // function backspace is delete - used Escape
-// Have formatRawDataResults, look for decimal point and just remove without adding 'e'
+
+// How display looks when too full & goes to 2 lines
