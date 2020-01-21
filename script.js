@@ -532,3 +532,10 @@ function addNotation(oldNotation) {
 
 calcButtons.forEach(calcButton => calcButton.addEventListener('click', collectData))
 window.addEventListener('keydown', collectData);
+
+// TO DO
+// Organize CSS file
+// Make mobile friendly
+// Write up README
+// Make Odin reference as the footer, with github link on other side
+// Check out different fonts

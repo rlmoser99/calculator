@@ -32,7 +32,7 @@ body {
     font-weight: 600;
 }
 
-/* Create small grid for 2 displays */
+/* Display Areas */
 .display-container{
     grid-column: 1 / 4;
     grid-row: 1 / 3;
@@ -67,6 +67,27 @@ body {
     font-size: 1.2rem;
 }
 
+/* Buttons */
+button img {
+    margin: 0 auto;
+}
+
+button sup {
+    vertical-align: top;
+    font-size: .9rem;
+    height: 30px;
+}
+
+button:focus {
+    /* border: 1px solid #00b1c5; */
+    outline-color: #00b1c5;
+}
+
+button:hover {
+    font-size: 2.5rem;
+    color: #00cfe6;
+}
+
 .operator {
     background: #242c3d;
     color: white;
@@ -89,6 +110,7 @@ body {
     grid-column: 4 / 5;
     grid-row: 1 / 3;
 }
+
 #Backspace:focus img, 
 #Backspace:hover img {
     height: 45px;
@@ -102,40 +124,15 @@ body {
     outline-color: white;
 }
 
-button img {
-    margin: 0 auto;
-}
-
-
 #exponent {
     display: flex;
-}
-
-button sup {
-    vertical-align: top;
-    font-size: .9rem;
-    height: 30px;
 }
 
 #factorial, #exponent {
     letter-spacing: .1em;
 }
 
-button:focus {
-    /* border: 1px solid #00b1c5; */
-    outline-color: #00b1c5;
-}
-
-button:hover {
-    font-size: 2.5rem;
-    color: #00cfe6;
-}
-
-.warning-container {
-    width: 400px;
-    margin: 15px auto;
-}
-
+/* Text Content */
 h1 {
     font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
     color: #ff7800;
@@ -151,22 +148,28 @@ p {
     font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
 }
 
-a {
-    color: #ff7800;
-}
-
-.description {
-    text-align: center;
-}
-
-a:hover {
-    color: white;
-}
-
 p span {
     color: white;
 }
 
 p img {
     padding: 4px 3px 0 0;
+}
+
+.warning-container {
+    width: 400px;
+    margin: 15px auto;
+}
+
+/* Footer */
+.description {
+    text-align: center;
+}
+
+a {
+    color: #ff7800;
+}
+
+a:hover {
+    color: white;
 }
