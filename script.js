@@ -207,6 +207,13 @@ function collectData(e) {
             break;
         default:
             // console.log('collectData was ran & only default happened');
+            warning.innerHTML = `
+            <p>Unusual Keyboard Shortcuts:</p>
+            <p><img src="img/backspace-solid-white.svg" height=20px /> delete (mac) | backspace (pc)</p>
+            <p><span>AC</span> escape (mac) | delete (pc)</p>
+            <p><span>+/-</span> arrow up or down</p>
+            `;
+            // warning.textContent = `Unusual Keyboard Shortcuts: arrow up/down to switch +/- or escape/delete to clear`
             break;
     }
     display.textContent = displayNumber;
@@ -224,8 +231,8 @@ function resetDisplayNumber() {
 
 // Limits the number of digits that can be entered at one time
 function exceedsDisplay() {
-    if (displayNumber.length >= 12) {
-        warning.textContent = `Up to 12 digits, including a decimal point, negative sign or exponent, can be entered on this calculator`
+    if (displayNumber.length >= 12 || rawData.length >= 48) {
+        warning.textContent = `The numbers have reached the limit of the display.`
         return true;
     } else {
         return false;
@@ -494,7 +501,6 @@ function formatRawDataResults() {
     } else if (rawDataResult < 1000000000 && rawDataResult.match(decimalRegExp)) {
         for (i = 1; i <= removeDigits - 2; i++) {
             formattedRawDataArray.pop();
-            console.log(formattedRawDataArray);
         }
         let formattedRawData = formattedRawDataArray.join('');
         rawDataResult = formattedRawData;
@@ -529,4 +535,4 @@ window.addEventListener('keydown', collectData);
 // Teach user keyboard shortcuts? - Maybe something displays for collectData default
 // function backspace is delete - used Escape
 
-// How display looks when too full & goes to 2 lines
+// Hit backspace " + ", so a empty space was at the end of the equation & it gave me an error that it was not a valid equation.
