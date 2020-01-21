@@ -205,6 +205,9 @@ function collectData(e) {
                 warning.textContent = `You must have a valid equation to solve. It can not end with '+ - * /'`
             }
             break;
+        case 'Shift':
+            // This is will allow shift to be used for '+ * ^ !' without triggering the default warning for keyboard shortcuts.
+            break;
         default:
             // console.log('collectData was ran & only default happened');
             warning.innerHTML = `
@@ -322,6 +325,7 @@ function backspaceNumberOrOperator() {
         let rawDataArray = rawData.split('');
         // If the array has an empty string at the end (for example, from ' + ')
         if (rawDataArray.length >= 1 && rawDataArray[rawDataArray.length-1].match(/\s/)) {
+            rawDataArray.pop();
             rawDataArray.pop();
             rawDataArray.pop();
         } else {
@@ -528,11 +532,3 @@ function addNotation(oldNotation) {
 
 calcButtons.forEach(calcButton => calcButton.addEventListener('click', collectData))
 window.addEventListener('keydown', collectData);
-
-// TO DO: 
-// 
-// Keyboard Support: pos-neg(up & down arrows) & AC button (Delete or Escape) 
-// Teach user keyboard shortcuts? - Maybe something displays for collectData default
-// function backspace is delete - used Escape
-
-// Hit backspace " + ", so a empty space was at the end of the equation & it gave me an error that it was not a valid equation.
