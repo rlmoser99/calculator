@@ -47,7 +47,7 @@ body {
     color: #00b1c5;
     border: none;
     font-family: monospace;
-    font-size: 2rem;
+    font-size: 1rem;
     font-weight: 600;
 }
 
@@ -76,14 +76,14 @@ body {
     grid-column: 1 / 4;
     grid-row: 2 / 3; 
     color: #273043;
-    font-size: 2.4rem;
+    font-size: 1rem;
 }
 
 .raw-display {
     grid-column: 1 / 4;
     grid-row: 1 / 2;
     color: white;
-    font-size: 1.2rem;
+    font-size: 1rem;
 }
 
 /* Buttons */
@@ -103,7 +103,7 @@ button:focus {
 }
 
 button:hover {
-    font-size: 2.5rem;
+    font-size: 1.5rem;
     color: #00cfe6;
 }
 
@@ -111,18 +111,18 @@ button:hover {
     background: #242c3d;
     color: white;
     font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
-    font-size: 1.75rem;
+    font-size: 1rem;
 }
 
 .operator:focus,
 .operator:hover {
-    font-size: 2.1rem;
+    font-size: 1.5rem;
     color: white;
 }
 
 .operator:focus img,
 .operator:hover img {
-    height: 35px;
+    height: 25px;
 }
 
 #Backspace {
@@ -132,7 +132,7 @@ button:hover {
 
 #Backspace:focus img, 
 #Backspace:hover img {
-    height: 45px;
+    height: 25px;
 }
 
 .equal {
@@ -192,6 +192,7 @@ footer {
     align-items: center;
     width: 100%;
     justify-self: flex-end;
+    height: 60px;
 }
 
 footer p {
