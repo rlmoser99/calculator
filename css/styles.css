@@ -4,6 +4,7 @@ html {
 
 body {
     background-color: #273043;
+    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
 }
 
 .wrapper {
@@ -27,7 +28,7 @@ body {
     box-shadow: 3px 3px 3px black;
     margin: 30px auto;
     width: 80vw;
-    height: 80vw;
+    height: 90vw;
     max-width: 400px;
     max-height: 400px;
     grid-template-columns: repeat(4, 1fr);
@@ -80,7 +81,7 @@ body {
     grid-column: 1 / 4;
     grid-row: 1 / 2;
     color: white;
-    font-size: .85rem;
+    font-size: .8rem;
 }
 
 /* Buttons */
@@ -109,7 +110,7 @@ button:hover {
 .operator {
     background: #242c3d;
     color: white;
-    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+    font-family: inherit;
     font-size: 1.25rem;
 }
 
@@ -151,7 +152,6 @@ button:hover {
 
 /* Text Content */
 h1 {
-    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
     color: #ff7800;
     font-size: 2rem;
     text-align: center;
@@ -162,7 +162,6 @@ p {
     color: #ff7800;
     font-size: 1rem;
     line-height: 1.75rem;
-    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
 }
 
 p span {
@@ -189,7 +188,8 @@ footer {
     align-items: center;
     width: 100%;
     justify-self: flex-end;
-    height: 60px;
+    /* height: 60px; */
+    flex: 0 1 60px;
 }
 
 footer p {
