@@ -1,7 +1,11 @@
-# calculator
+# Calculator
 This project is from The Odin Project (https://www.theodinproject.com/courses/web-development-101/lessons/calculator).
 
-When I am done I will come back and reflect on a few things that I learned.
+## Code, Re-Factor, Repeat...
+I had to re-factor my work several times as I realized how different functions and variables interacted with each other. I hope to learn more on how to plan and execute a project like this more efficiently. As I am learning, I just took everything one step at time and then re-factor when necessary.
+
+## Regex is AMAZING!
+I really enjoyed working with regular expressions and probably over-used them to format the display numbers. 
 
 ## Order of Operations
 I used the order of operations that are published by Wolfram (http://mathworld.wolfram.com/Precedence.html):
