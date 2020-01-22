@@ -188,7 +188,7 @@ footer {
     align-items: center;
     width: 100%;
     justify-self: flex-end;
-    /* height: 60px; */
+    height: 60px;
     /* flex: 0 0 60px; */
 }
 
@@ -202,7 +202,7 @@ footer img {
     font-size: .9rem;
     /* height: 60px; */
     width: 60vw;
-    padding: 10px 0;
+    /* padding: 10px 0; */
 }
 
 a {
