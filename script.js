@@ -235,7 +235,7 @@ function resetDisplayNumber() {
 
 // Limits the number of digits that can be entered at one time
 function exceedsDisplay() {
-    if (displayNumber.length >= 12 || rawData.length >= 48) {
+    if (displayNumber.length >= 12 || rawData.length >= 45) {
         warning.textContent = `The numbers have reached the limit of the display.`
         return true;
     } else {
