@@ -4,7 +4,6 @@ html {
 
 body {
     background-color: #273043;
-
 }
 
 .wrapper {
@@ -100,7 +99,6 @@ button:focus {
 }
 
 button:hover {
-    font-size: 1.5rem;
     color: #00cfe6;
 }
 
@@ -113,7 +111,6 @@ button:hover {
 
 .operator:focus,
 .operator:hover {
-    font-size: 1.5rem;
     color: white;
 }
 
@@ -213,4 +210,15 @@ a {
 
 a:hover {
     color: #242c3d;
+}
+
+@media only screen and (min-width: 600px) {
+    button:hover {
+        font-size: 1.5rem;
+    }
+
+    .operator:focus,
+    .operator:hover {
+        font-size: 1.5rem;
+    }
 }
