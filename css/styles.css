@@ -189,10 +189,11 @@ footer {
     width: 100%;
     justify-self: flex-end;
     /* height: 60px; */
-    flex: 0 1 60px;
+    /* flex: 0 1 60px; */
 }
 
 footer p {
+    height: 60px;
     width: 60vw;
 }
 
@@ -201,7 +202,6 @@ footer img {
 }
 
 .description {
-    /* text-align: center; */
     color: white;
     margin-left: 15px;
     font-size: .9rem;
