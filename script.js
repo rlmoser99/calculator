@@ -2,6 +2,7 @@ const calcButtons = document.querySelectorAll('button');
 const display = document.querySelector('.display');
 const rawDisplay = document.querySelector('.raw-display');
 const warning = document.querySelector('.warning')
+const footerIcon = document.querySelector('footer img');
 let displayNumber = '';
 let rawData = '';
 let rawDataResult = '';
@@ -530,10 +531,20 @@ function addNotation(oldNotation) {
     rawDataResult = formattedRawData;
 }
 
+// Footer Hover
+
+function grayIcon() {
+    footerIcon.src = "img/github-gray.svg";
+}
+
+function whiteIcon() {
+    footerIcon.src = "img/github-white.svg";
+}
+
 calcButtons.forEach(calcButton => calcButton.addEventListener('click', collectData))
 window.addEventListener('keydown', collectData);
+footerIcon.addEventListener('mouseenter', grayIcon);
+footerIcon.addEventListener('mouseleave', whiteIcon);
 
 // TO DO
 // Write up README
-// Oh phone number had two e's in it
-// Non-mobile sixing for font-size at 600px +

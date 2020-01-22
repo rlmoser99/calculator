@@ -268,4 +268,12 @@ a:hover {
         font-size: 1.25rem;
         line-height: 1.75rem;
     }
+
+    footer img {
+        margin-right: 30px;
+    }
+    
+    .description {
+        margin-left: 30px;
+    }
 }
