@@ -212,7 +212,7 @@ function collectData(e) {
             // console.log('collectData was ran & only default happened');
             warning.innerHTML = `
             <p>Unusual Keyboard Shortcuts:</p>
-            <p><img src="img/backspace-solid-white.svg" height=20px /> delete (mac) | backspace (pc)</p>
+            <div class="shortcut"<p><img src="img/backspace-solid-white.svg" height=15px /> delete (mac) | backspace (pc)</p></div>
             <p><span>AC</span> escape (mac) | delete (pc)</p>
             <p><span>+/-</span> arrow up or down</p>
             `;
@@ -534,7 +534,5 @@ calcButtons.forEach(calcButton => calcButton.addEventListener('click', collectDa
 window.addEventListener('keydown', collectData);
 
 // TO DO
-// Make mobile friendly
 // Write up README
-// Check out different fonts
 // Oh phone number had two e's in it
