@@ -217,12 +217,55 @@ a:hover {
 }
 
 @media only screen and (min-width: 600px) {
+
+    .container > * {
+        font-size: 3rem;
+    }
+
+    .display {
+        font-size: 2.4rem;
+    }
+    
+    .raw-display {
+        font-size: 1.1rem;
+    }
+
+    button sup {
+        font-size: .9rem;
+    }
+
+    .operator {
+        font-size: 1.75rem;
+    }
+
+    button img {
+        height: 30px;
+    }
+
+    #Backspace img {
+        height: 40px;
+    }
+    
+    #Backspace:focus img, 
+    #Backspace:hover img {
+        height: 45px;
+    }
+
     button:hover {
-        font-size: 1.5rem;
+        font-size: 2.5rem;
     }
 
     .operator:focus,
     .operator:hover {
-        font-size: 1.5rem;
+        font-size: 2.1rem;
+    }
+
+    h1 {
+        font-size: 2.5rem;
+    }
+
+    p {
+        font-size: 1.25rem;
+        line-height: 1.75rem;
     }
 }
