@@ -532,7 +532,7 @@ function addNotation(oldNotation) {
 }
 
 // Footer Hover
-
+``
 function grayIcon() {
     footerIcon.src = "img/github-gray.svg";
 }
@@ -548,3 +548,4 @@ footerIcon.addEventListener('mouseleave', whiteIcon);
 
 // TO DO
 // Write up README
+// Sizes of fonts - add more breakpoints?
