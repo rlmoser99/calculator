@@ -176,7 +176,7 @@ p img {
     width: 80vw;
     max-width: 400px;
     margin: 15px auto;
-    min-height: 125px;
+    /* min-height: 125px; */
 }
 
 /* Footer */
