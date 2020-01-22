@@ -534,8 +534,7 @@ calcButtons.forEach(calcButton => calcButton.addEventListener('click', collectDa
 window.addEventListener('keydown', collectData);
 
 // TO DO
-// Organize CSS file
 // Make mobile friendly
 // Write up README
-// Make Odin reference as the footer, with github link on other side
 // Check out different fonts
+// Oh phone number had two e's in it

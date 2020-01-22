@@ -23,8 +23,8 @@ body {
 
 .container {
     display: grid;
-    border: 1px solid black;
-    box-shadow: 3px 3px 3px black;
+    /* border: 1px solid black; */
+    /* box-shadow: 3px 3px 3px black; */
     margin: 30px auto;
     width: 80vw;
     height: 80vw;
@@ -147,7 +147,6 @@ button:hover {
 
 /* Text Content */
 h1 {
-    /* font-family: monospace; */
     font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
     color: #ff7800;
     font-size: 2rem;
