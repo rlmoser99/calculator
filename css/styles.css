@@ -176,7 +176,7 @@ p img {
     width: 80vw;
     max-width: 400px;
     margin: 15px auto;
-    /* min-height: 125px; */
+    min-height: 125px;
 }
 
 /* Footer */
@@ -188,8 +188,7 @@ footer {
     align-items: center;
     width: 100%;
     justify-self: flex-end;
-    height: 60px;
-    /* flex: 0 0 60px; */
+    height: 55px;
 }
 
 footer img {
@@ -200,9 +199,7 @@ footer img {
     color: white;
     margin-left: 15px;
     font-size: .9rem;
-    /* height: 60px; */
     width: 60vw;
-    /* padding: 10px 0; */
 }
 
 a {
