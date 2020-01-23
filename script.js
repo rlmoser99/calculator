@@ -42,14 +42,11 @@ function exponent(a, b) {
 function collectData(e) {   
     warning.textContent = '';
     let data = '';
-    // console.log(`e.key is ${e.key}`);
-    // console.log(`this.id is ${this.id}`);
     if (e.key === undefined) {
         data = this.id;
     } else {
         data = e.key;
     }
-    // console.log(`DATA: ${data}`)
     switch(data) {
         case '0':
             resetDisplayNumber();
@@ -210,14 +207,12 @@ function collectData(e) {
             // This is will allow shift to be used for '+ * ^ !' without triggering the default warning for keyboard shortcuts.
             break;
         default:
-            // console.log('collectData was ran & only default happened');
             warning.innerHTML = `
             <p>Unusual Keyboard Shortcuts:</p>
             <div class="shortcut"<p><img src="img/backspace-solid-white.svg" height=15px /> delete (mac) | backspace (pc)</p></div>
             <p><span>AC</span> escape (mac) | delete (pc)</p>
             <p><span>+/-</span> arrow up or down</p>
             `;
-            // warning.textContent = `Unusual Keyboard Shortcuts: arrow up/down to switch +/- or escape/delete to clear`
             break;
     }
     display.textContent = displayNumber;
@@ -314,7 +309,7 @@ function hasPreviousNumber() {
 
 // CALCULATOR FUNCTIONALITY
 
-// Backspace 1 space in Display Number, or 1-2 in Raw Data
+// Backspace 1 space in Display Number, or 1-3 spaces in Raw Data
 function backspaceNumberOrOperator() {
     // If there is a display number, delete from it first
     if (displayNumber.length >= 1) {
@@ -532,7 +527,7 @@ function addNotation(oldNotation) {
 }
 
 // Footer Hover
-``
+
 function grayIcon() {
     footerIcon.src = "img/github-gray.svg";
 }
@@ -545,7 +540,3 @@ calcButtons.forEach(calcButton => calcButton.addEventListener('click', collectDa
 window.addEventListener('keydown', collectData);
 footerIcon.addEventListener('mouseenter', grayIcon);
 footerIcon.addEventListener('mouseleave', whiteIcon);
-
-// TO DO
-// Write up README
-// Sizes of fonts - add more breakpoints?
