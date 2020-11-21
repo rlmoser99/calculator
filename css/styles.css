@@ -377,6 +377,12 @@ h1 {
     text-align: center;
 }
 
+h2 {
+    color: #ffffff;
+    margin: 15px 5vw;
+    text-align: center;
+}
+
 p {
     color: #ff7800;
     font-size: .9rem;
